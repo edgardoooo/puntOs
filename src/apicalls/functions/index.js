@@ -1,92 +1,9 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-var nodemailer = require('nodemailer');
-var serviceAccount = require("./puntOs-Capstone2017-4ab872953b34.json");
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://puntos-capstone2017.firebaseio.com/"
-});
-
-const sender_email = functions.config().gmail.email;
-const sender_pass = functions.config().gmail.password;
-const transport = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: sender_email,
-    pass: sender_pass
-  }
-})
-
-exports.SendConfirmAndApproveEmails = functions.database.ref('/users/{uid}').onWrite(event =>{
-  const event_data = event.data;
-  const value = event_data.val();
-  const user_id = event.params.uid;
-  //Value not new or deleted
-  if(event_data.previous.exists() || !event.data.exists()){
-    return null;
-  }
-
-  if (value.type === 'Business'){
-
-  return admin.database().ref('/admin/u5EldzH8DmhSdWoTVpyrAISjLGm2').once('value', snapshot => {
-    const admin_email = snapshot.val().email;
-    const confirm_mail_struct = {
-      from: 'puntOs Team <noreply@firebase.com>',
-      to: value.email,
-      subject: 'Thanks for submiting your information!',
-      text: `Thank you ${value.businessName} for submitting your business request to join puntOs!
-      Please allow at least 24hrs for your information to be verified and your account activated.`
-    };
-
-    const approve_mail_struct = {
-      from: 'puntOs Team <noreply@firebase.com>',
-      to: admin_email,
-      subject: `Approval request from ${value.businessName}!`,
-      text: `Please verify that the following information is correct:
-      ${value} If this information is correct please access this link to approve account creation:
-      https://us-central1-puntos-capstone2017.cloudfunctions.net/approveBusinessAccount?id=${user_id}&size=${value.size}`
-    };
-
-    const confirmation_promise = transport.sendMail(confirm_mail_struct)
-      .then(() => console.log(`email sent to ${value.email}`))
-      .catch((error) => console.error(error));
-
-    const approval_promise = transport.sendMail(approve_mail_struct)
-      .then(() => console.log(`email sent to ${admin_email}`))
-      .catch((error) => console.error(error));
-
-    return Promise.all([confirmation_promise,approval_promise]);
-  });
-} else if (value.type === 'user'){
-    const confirm_mail_struct = {
-      from: 'puntOs Team <noreply@firebase.com>',
-      to: value.email,
-      subject: 'Welcome to the puntOs Team!',
-      text: `Thank you ${value.name} for joining our team!
-      Log in and start earning points today!`
-    };
-    return transport.sendMail(confirm_mail_struct)
-      .then(() => console.log(`email sent to ${value.email}`))
-      .catch((error) => console.error(error));
-  }
-});
-
-exports.approveBusinessAccount = functions.https.onRequest((req, res) => {
-  return admin.database().ref(`users/${req.query.id}`).once('value', snapshot => {
-    var radius_size = '0';
-    if (req.query.size === 'Small')
-      radius_size= '40';
-    else if( req.query.size === 'Medium')
-        radius_size = '60';
-    else if( req.query.size === 'Large')
-        radius_size = '80';
-    else if( req.query.size === 'XLarge')
-        radius_size = '100';
-    const activate_account = { active: true, longitude: 'somevalue', latitude: 'somevalue', radius: radius_size };
-    snapshot.ref.update(activate_account).catch((error) => console.log(error));
-  }).then(snapshot => res.status(200).end());
-});
 // The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
+const functions = require('firebase-functions');
+
+// The Firebase Admin SDK to access the Firebase Realtime Database.
+const admin = require('firebase-admin');
+admin.initializeApp(functions.config().firebase);
 
 // Take the text parameter passed to this HTTP endpoint and insert it into the
 // Realtime Database under the path /messages/:pushId/original
