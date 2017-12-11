@@ -10,7 +10,6 @@ const INITIAL_STATE = {
   phoneNumber: '',
   email: '',
   password: '',
-  gMaps: false,
   error: '',
   loading: '',
   type: 'Business',

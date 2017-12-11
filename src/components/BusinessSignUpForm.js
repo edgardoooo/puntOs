@@ -2,20 +2,19 @@ import React, { Component } from 'react';
 import { View, Text, Image, ScrollView, LayoutAnimation, TouchableOpacity } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 import { InputLine, Button, Spinner } from './common';
-import { businessFormUpdate, businessSignUp, businessSignUpReset } from '../actions';
+import { businessFormUpdate, businessSignUp } from '../actions';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 class BusinessSignUpForm extends Component {
 
-  componentWillMount(){
-    this.props.businessSignUpReset();
-  }
   componentWillUpdate() {
   LayoutAnimation.spring();
   }
   renderContent(){
-    if (this.props.step === 1){
+    const { businessName,username,addressLine,city,country,zipCode,phoneNumber,email,
+    password,type,step,size,error,loading,businessFormUpdate, businessSignUp} = this.props;
+    if (step === 1){
       return (
       <View style={styles.containerStyle}>
       <Text style={{ fontSize: 14,color: 'black', fontWeight: 'bold', paddingBottom: 10 }}>
@@ -30,41 +29,41 @@ class BusinessSignUpForm extends Component {
       Credentials
       </Text>
       <InputLine
-        onChangeText={value => this.props.businessFormUpdate({ prop: 'businessName', value })}
+        onChangeText={value => businessFormUpdate({ prop: 'businessName', value })}
         placeholder='Business Name'
         placeholderTextColor='gray'
         selectionColor='#0084b4'
         overStyle={{ borderBottomColor: '#0084b4', color: '#0084b4' }}
-        value={this.props.businessName}
+        value={businessName}
       />
       <InputLine
-        onChangeText={value => this.props.businessFormUpdate({ prop: 'email', value })}
+        onChangeText={value => businessFormUpdate({ prop: 'email', value })}
         placeholder='email@gmail.com'
         placeholderTextColor='gray'
         selectionColor='#0084b4'
         overStyle={{ borderBottomColor: '#0084b4', color: '#0084b4' }}
-        value={this.props.email}
+        value={email}
       />
       <InputLine
-        onChangeText={value => this.props.businessFormUpdate({ prop: 'username', value })}
+        onChangeText={value => businessFormUpdate({ prop: 'username', value })}
         placeholder='username'
         placeholderTextColor='gray'
         selectionColor='#0084b4'
         overStyle={{ borderBottomColor: '#0084b4', color: '#0084b4' }}
-        value={this.props.username}
+        value={username}
       />
       <InputLine
-        onChangeText={value => this.props.businessFormUpdate({ prop: 'password', value })}
+        onChangeText={value => businessFormUpdate({ prop: 'password', value })}
         secureTextEntry
         placeholder='password'
         placeholderTextColor='gray'
         selectionColor='#0084b4'
         overStyle={{ borderBottomColor: '#0084b4', color: '#0084b4' }}
-        value={this.props.password}
+        value={password}
       />
       </View>
     );
-    } else if (this.props.step === 2){
+    } else if (step === 2){
       return (
       <View style={styles.containerStyle}>
       <Text style={{ fontSize: 14,color: 'black', fontWeight: 'bold', paddingBottom: 10 }}>
@@ -79,48 +78,48 @@ class BusinessSignUpForm extends Component {
       Contact Information
       </Text>
       <InputLine
-        onChangeText={value => this.props.businessFormUpdate({ prop: 'addressLine', value })}
+        onChangeText={value => businessFormUpdate({ prop: 'addressLine', value })}
         placeholder='AddressLine'
         placeholderTextColor='gray'
         selectionColor='#0084b4'
         overStyle={{ borderBottomColor: '#0084b4', color: '#0084b4' }}
-        value={this.props.addressLine}
+        value={addressLine}
       />
       <InputLine
-        onChangeText={value => this.props.businessFormUpdate({ prop: 'city', value })}
+        onChangeText={value => businessFormUpdate({ prop: 'city', value })}
         placeholder='City'
         placeholderTextColor='gray'
         selectionColor='#0084b4'
         overStyle={{ borderBottomColor: '#0084b4', color: '#0084b4' }}
-        value={this.props.city}
+        value={city}
       />
       <InputLine
-        onChangeText={value => this.props.businessFormUpdate({ prop: 'zipCode', value })}
+        onChangeText={value => businessFormUpdate({ prop: 'zipCode', value })}
         placeholder='Zipcode'
         placeholderTextColor='gray'
         selectionColor='#0084b4'
         overStyle={{ borderBottomColor: '#0084b4', color: '#0084b4' }}
-        value={this.props.zipCode}
+        value={zipCode}
       />
       <InputLine
-        onChangeText={value => this.props.businessFormUpdate({ prop: 'country', value })}
+        onChangeText={value => businessFormUpdate({ prop: 'country', value })}
         placeholder='Country'
         placeholderTextColor='gray'
         selectionColor='#0084b4'
         overStyle={{ borderBottomColor: '#0084b4', color: '#0084b4' }}
-        value={this.props.country}
+        value={country}
       />
       <InputLine
-        onChangeText={value => this.props.businessFormUpdate({ prop: 'phoneNumber', value })}
+        onChangeText={value => businessFormUpdate({ prop: 'phoneNumber', value })}
         placeholder='Phone Number'
         placeholderTextColor='gray'
         selectionColor='#0084b4'
         overStyle={{ borderBottomColor: '#0084b4', color: '#0084b4' }}
-        value={this.props.phoneNumber}
+        value={phoneNumber}
       />
       </View>
     );
-    } else if (this.props.step === 3) {
+    } else if (step === 3) {
       return (
       <View style={styles.containerStyle}>
       <Text style={{ fontSize: 14,color: 'black', fontWeight: 'bold', paddingBottom: 10 }}>
@@ -136,13 +135,13 @@ class BusinessSignUpForm extends Component {
       </Text>
       <View style={{ flex: 1, flexDirection: 'column', alignSelf: 'center', alignItems: 'center'}}>
         <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'center', alignItems: 'center', paddingTop: 20, paddingBottom: 10}}>
-        <TouchableOpacity onPress={() => this.props.businessFormUpdate({ prop: 'size', value: 'Small'})} >
+        <TouchableOpacity onPress={() => businessFormUpdate({ prop: 'size', value: 'Small'})} >
         <Image
           style={styles.thumbnailStyle}
           source={require('../assets/smallRadIcon.png')}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.businessFormUpdate({ prop: 'size', value: 'Medium'})}>
+        <TouchableOpacity onPress={() => businessFormUpdate({ prop: 'size', value: 'Medium'})}>
           <Image
           style={styles.thumbnailStyle}
           source={require('../assets/mediumRadIcon.png')}
@@ -150,13 +149,13 @@ class BusinessSignUpForm extends Component {
         </TouchableOpacity>
         </View>
         <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'center', alignItems: 'center', paddingTop: 10, paddingBottom: 10}}>
-        <TouchableOpacity onPress={() => this.props.businessFormUpdate({ prop: 'size', value: 'Large'})}>
+        <TouchableOpacity onPress={() => businessFormUpdate({ prop: 'size', value: 'Large'})}>
           <Image
             style={styles.thumbnailStyle}
             source={require('../assets/largeRadIcon.png')}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.businessFormUpdate({ prop: 'size', value: 'XLarge'})}>
+        <TouchableOpacity onPress={() => businessFormUpdate({ prop: 'size', value: 'XLarge'})}>
           <Image
             style={styles.thumbnailStyle}
             source={require('../assets/xlargeRadIcon.png')}
@@ -164,7 +163,7 @@ class BusinessSignUpForm extends Component {
         </TouchableOpacity>
         </View>
         <View style={{ flex: 1, flexDirection: 'row', alignSelf: 'center', alignItems: 'center' }}>
-          <Text style={styles.normalTextStyle}>{this.props.size}</Text>
+          <Text style={styles.sizeTextStyle}>{size}</Text>
         </View>
       </View>
       </View>
@@ -173,40 +172,45 @@ class BusinessSignUpForm extends Component {
   }
 
   onNextPress(){
-    if (this.props.step === 1) {
-      if (this.props.email != '' && this.props.password != '' && this.props.username != '' && this.props.businessName != '' ){
-        this.props.businessFormUpdate({ prop: 'step', value: 2})
-        this.props.businessFormUpdate({ prop: 'error', value: ''})
+    const { businessName,username,email,addressLine,city, country, zipCode, phoneNumber,
+    password,step,error,type,size,businessFormUpdate, businessSignUp } = this.props;
+    if (step === 1) {
+      if (email != '' && password != '' && username != '' && businessName != '' ){
+        businessFormUpdate({ prop: 'step', value: 2})
+        businessFormUpdate({ prop: 'error', value: ''})
       }
       else {
-        this.props.businessFormUpdate({ prop: 'error', value: 'Missing Inputs' })
+        businessFormUpdate({ prop: 'error', value: 'Missing Inputs' })
       }
     }
-    else if (this.props.step === 2) {
-      this.props.businessFormUpdate({ prop: 'step', value: 3 })
-      this.props.businessFormUpdate({ prop: 'error', value: ''})
+    else if (step === 2) {
+      businessFormUpdate({ prop: 'step', value: 3 })
+      businessFormUpdate({ prop: 'error', value: ''})
     }
     else {
-      this.props.businessSignUp(this.props);
+      businessSignUp({businessName,username,addressLine,city,country,zipCode,phoneNumber,email,
+      password,type,size});
     }
   }
 
   onBackPress(){
-    if (this.props.step === 2) {
-        this.props.businessFormUpdate({ prop: 'step', value: 1})
-        this.props.businessFormUpdate({ prop: 'error', value: ''})
+    const { step,error,businessFormUpdate, businessSignUp} = this.props;
+    if (step === 2) {
+        businessFormUpdate({ prop: 'step', value: 1})
+        businessFormUpdate({ prop: 'error', value: ''})
     }
-    if (this.props.step === 3) {
-      this.props.businessFormUpdate({ prop: 'step', value: 2 })
-      this.props.businessFormUpdate({ prop: 'error', value: ''})
+    if (step === 3) {
+      businessFormUpdate({ prop: 'step', value: 2 })
+      businessFormUpdate({ prop: 'error', value: ''})
     }
   }
 
   renderButtons(){
-    if (this.props.loading){
+    const { step, loading } = this.props;
+    if (loading){
       return (
         <Spinner size='large' />
-      );} else if (this.props.step > 1) {
+      );} else if (step > 1) {
       return (  <View style={{ width: 100, flexDirection: 'row', justifyContent: 'center'}}>
                   <Button onPress={this.onBackPress.bind(this)} overStyle={{ width: 150 }}>Back</Button>
                   <Button onPress={this.onNextPress.bind(this)} overStyle={{ width: 150 }}>Next</Button>
@@ -224,14 +228,33 @@ class BusinessSignUpForm extends Component {
   }
 
   renderError() {
-    if (this.props.error) {
+    const { error } = this.props;
+    if (error) {
       return (
         <View>
           <Text style={styles.errorTextStyle}>
-            {this.props.error}
+            {error}
           </Text>
         </View>
       );
+    }
+  }
+
+  renderSizeValue() {
+    const { step, size } = this.props;
+    if (step === 3){
+      switch(size){
+        case 'Small':
+          return <Text style={{ fontSize: 16, color: '#f97171', fontWeight: 'bold', marginBottom: -4 }}>40 ft. radius</Text>
+        case 'Medium':
+          return <Text style={{ fontSize: 16, color: '#f97171', fontWeight: 'bold', marginBottom: -4  }}>60 ft. radius</Text>
+        case 'Large':
+          return <Text style={{ fontSize: 16, color: '#f97171', fontWeight: 'bold', marginBottom: -4  }}>80 ft. radius</Text>
+        case 'XLarge':
+          return <Text style={{ fontSize: 16, color: '#f97171', fontWeight: 'bold', marginBottom: -4  }}>100 ft. radius</Text>
+        default:
+          return;
+      }
     }
   }
 
@@ -286,6 +309,11 @@ const styles = {
     fontSize: 20,
     color: 'black'
   },
+  sizeTextStyle: {
+    fontSize: 20,
+    color: 'black',
+    marginBottom: -10
+  },
 bigStyle: {
   fontSize: 50,
   fontFamily: 'Futura',
@@ -311,11 +339,11 @@ const mapStateToProps = state => {
     phoneNumber,
     email,
     password,
-    gMaps,
     error,
     loading,
     step,
-    size} = state.businessSignUp;
+    size,
+    type} = state.businessSignUp;
   return {
       businessName,
       username,
@@ -326,11 +354,11 @@ const mapStateToProps = state => {
       phoneNumber,
       email,
       password,
-      gMaps,
       error,
       loading,
       step,
-      size};
+      size,
+      type};
 };
 
-export default connect(mapStateToProps, { businessFormUpdate, businessSignUp, businessSignUpReset})(BusinessSignUpForm);
+export default connect(mapStateToProps, { businessFormUpdate, businessSignUp })(BusinessSignUpForm);

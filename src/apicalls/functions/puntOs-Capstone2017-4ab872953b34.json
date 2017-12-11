@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "puntos-capstone2017",
+  "private_key_id": "4ab872953b3419c31068a45c39c1ac53c3a42a20",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC+qzJ0jX01YtMV\nl49aA2h/u1gSqObtI7AsDvYdCD0HlERdPh6+q8CsbDH39Tn4+TbrnnEalcvxIs1P\nv/jax481uY3GTxGS4qeUQV6K49KNxk6ROrrkkKX0YZu9iaPKSKIqoqFnWFFt5e6G\nmLrvvdqtyjKtnu90VyE3znJefUsE7lFZ5iwAHTX4bQV8PFc9Mv3ApC91iZt2jfkK\noRuALp7u7Btx2c8WMqmtCIwVHGNG2s0P3cHAtr1USftPNCU50pf0AET0wGfWUUeQ\nMqwZ1dXJXCVqNd9C1qNTMy56fwfm5zKSscHisj6U12Yjy+faXLY7p33hpdMkrnQP\n4aYnlvd/AgMBAAECggEAE3LJSpE0wHwhlYC9oGFbneJ2qS9C9X+1Pxvm58QzhsaN\nXfNxqwzq3MuLzJkzaMgcMtbDqQIMPj7zW/CeyiDJOfeA1MWzlbIlL3P8LZpFG61V\neJkvKhRFET3e5xZB4jwcFSbnOXA38h1I12rUb+guL5mXJ2rgTZN7nG0kRlYXulta\nxXyt/Pw9f+emG1a47aSePEuNjXHtGpz3wilrw9F/2qOrJpICFm3QAeFeVaUwWdFX\n5yuiXggVcl9fFaCvlI7nHhFEvVikCEi9Pv4PfiO3GfUitQWayme0iwZ13EZ+j0+D\nzxTYPGKOjVcxfKHK84OabXW4LzWCyVCzwbaGX0q4hQKBgQD00bQwV1xbK52DSJlu\nRoYW9yCjuAFf02f70kAJXzYxl5q2eFBeoaVLbeH/Nuzf+Yzybn6xlCE3cpo4se9t\n+alNNEQBMPZ7ZQo0rBy/5AnxiLx1LptYDZQDHcSF6QdVKE8jsZXfAiLZGGHRGnfU\nTY3HBGh4h2y9WwWYa0A2Cy1prQKBgQDHYGUqhti4Rv/6SNiO8SpZlOj9j7zeUnNJ\nlUpR0w3fWSliLssskN6JyAysXzcqcWwXvkh65dQPguywsslez20LA21lVTo5TgJ8\nMfK13gpXs2fpL2hEE04QwDPpM8bFs7ItdGhBN1IK9y/8h92cqyl0bmFAbr3yFW2P\nkM7nhHbjWwKBgBlDhq+yZDJ4VsHUfRjXKEE4cWLTuziTTVi8QqV08Ne/SFTqJ4kM\nb01QYpD+rwUR8IyYAHT8z0y0g9uz6PxVVjZEXXwt/FGRhLMYy8K1mp0VOjVxgNBe\nXlbP/JbBDGOqTDhnvAqOYuA6VuXIMHN1KVtPRiSh/QOxX+txreel0aLlAoGBAMJ8\nFJNkUNmJYMAL+TuOouoZqSFW6jzQnudDeujQgTLC7ex5ivWhJ4Otojcu9kgvtep/\nUoKX2MF8zFgdPvN+UXcx06/KcG5f22q86m5f9yTPu+gqt4HYdwk+BCVSvW4zOPbA\nG8aqKRzLPYMQIaxnBpwt5C4PGLiiEGrALiSHAdYLAoGBAJqq7r3yBqruNr1C0jBE\nJSVaC/plx8RM/R1+M5NLxV0nG0MoAFJoUOGSJHyf78S5c3L/cOc8bO9GHGthZVbB\n8jovN3/9Jkiq+Us9iyrDKKxq/FLRKIBGenZMhIRZpD3VtcRyyBRnkNCpduyiJDPG\napwauAMz0rPy7Hvd0zFe65qz\n-----END PRIVATE KEY-----\n",
+  "client_email": "puntos-capstone2017@appspot.gserviceaccount.com",
+  "client_id": "115518984098786992478",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/puntos-capstone2017%40appspot.gserviceaccount.com"
+}

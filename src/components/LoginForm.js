@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { InputLine, Button, Spinner } from './common';
 import { connect } from 'react-redux';
-import { authFormUpdate, loginUser } from '../actions';
+import { authFormUpdate, loginUser, forgotPassword } from '../actions';
 import { Actions } from 'react-native-router-flux';
 
 class LoginForm extends Component {
@@ -61,9 +61,11 @@ renderButton() {
           />
         {this.renderError()}
         {this.renderButton()}
+        <TouchableOpacity onPress={() => this.props.forgotPassword(this.props.email)}>
         <Text style={styles.linkStyle}>
         Forgot your password?
         </Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => Actions.preSignUp()}>
         <Text style={styles.linkStyle}>
         Sign up
@@ -116,4 +118,4 @@ const mapStateToProps = state => {
   return { email, password, error, loading};
 };
 
-export default connect(mapStateToProps, { authFormUpdate, loginUser })(LoginForm);
+export default connect(mapStateToProps, { authFormUpdate, loginUser, forgotPassword })(LoginForm);

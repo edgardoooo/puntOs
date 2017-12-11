@@ -21,7 +21,7 @@ class SuccessBusinessView extends Component {
       info about your account.
       </Text>
       <View style={styles.containerStyle}>
-      <Button onPress={() => Actions.login()} >Back to Login</Button>
+      <Button onPress={() => Actions.login({ type: 'reset' })} >Back to Login</Button>
       </View>
       </View>
     );

@@ -16,7 +16,7 @@ const InputLine = ({ label, value, onChangeText, placeholder, secureTextEntry, o
         autoCapitalize='none'
         placeholderTextColor={placeholderTextColor}//'#c6e4f2'
         selectionColor= {selectionColor}
-        underlineColorAndroid="transparent"        
+        underlineColorAndroid="transparent"
       />
     </View>
   );

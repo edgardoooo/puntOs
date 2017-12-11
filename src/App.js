@@ -10,14 +10,14 @@ import Router from './Router';
 class App extends Component {
   componentWillMount() {
     const config = {
-        apiKey: "AIzaSyDxE1Bw8qQ3aOgJRxTiR88wPGTAyYOsn4Y",
-        authDomain: "puntos-capstone2017.firebaseapp.com",
-        databaseURL: "https://puntos-capstone2017.firebaseio.com",
-        projectId: "puntos-capstone2017",
-        storageBucket: "puntos-capstone2017.appspot.com",
-        messagingSenderId: "388873118722"
-      };
-      firebase.initializeApp(config);
+      apiKey: "AIzaSyDxE1Bw8qQ3aOgJRxTiR88wPGTAyYOsn4Y",
+      authDomain: "puntos-capstone2017.firebaseapp.com",
+      databaseURL: "https://puntos-capstone2017.firebaseio.com",
+      projectId: "puntos-capstone2017",
+      storageBucket: "puntos-capstone2017.appspot.com",
+      messagingSenderId: "388873118722"
+    };
+    firebase.initializeApp(config);
   }
   render() {
     return (
