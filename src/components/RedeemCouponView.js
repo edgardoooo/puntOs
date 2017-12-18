@@ -3,8 +3,6 @@ import { View, Text, ScrollView, Image, TouchableHighlight, LayoutAnimation } fr
 import { Actions } from 'react-native-router-flux';
 import { Button, Spinner } from './common';
 import { connect } from 'react-redux';
-
-import { claimCoupon, updateCouponProfile } from '../actions';
 import { claimCoupon, updateCouponProfile, updateClaimBy, setCouponToExpired } from '../actions'
 
 

@@ -3,246 +3,246 @@
 
     <item
         is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/1.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="72128af126ddd7d6252da9357fe560d3abcdfb0c">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-base-1.3.0_91df5f21b4823eb2211cc07a11581befa9441eed.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/1.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="48c7f54c2515a2312d3a4481d10c43fbb807f3af">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-1.3.0_8563b204a491bda48141f649b831c08857c5c652.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.0.1_6f6be2bf12314aadc2dcf97844d8c8cdbe9b6876.jar" />
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.0.1_61e0e13139ab87eac26ad441d886828bccd8a9f9.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/Users/hectorgarcia/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.6.0/69edde9fc4b01c9fd51d25b83428837478c27254/okhttp-3.6.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/okhttp-3.6.0_871db78c34811b2dafb581ebd7c075ac451bb47f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.facebook.fbui.textlayoutbuilder/textlayoutbuilder/1.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="f90b593491e4044903f0bbf68dc3fa2790b151b9">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/com.facebook.fbui.textlayoutbuilder-textlayoutbuilder-1.0.0_d931bcea68b1a6dace32c9b56903ac62177066c8.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/.gradle/caches/modules-2/files-2.1/com.adobe.xmp/xmpcore/5.1.2/55615fa2582424e38705487d1d3969af8554f637/xmpcore-5.1.2.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="55615fa2582424e38705487d1d3969af8554f637">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/xmpcore-5.1.2_1eda2bf7f5699ede5745688d192b9cc6709de2a1.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/puntOs/react-native-vector-icons/unspecified/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="f2cf527de8d0bd35d72088fafea02395ba4a9eec">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/puntOs-react-native-vector-icons-unspecified_432bffe6d676491410c118d668e9690866e34c87.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/usr/local/Caskroom/android-sdk/3859397,26.0.1/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1_14f9d37a395d85296593238e31f8639ef41b7732.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.0.1_f5922ef70c50e5d3b26b15ed603b1a1fcdefb269.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-okhttp3/1.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="c03c08c9934b23c8c09c803345ec51a74119127b">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-okhttp3-1.3.0_4e0debce94adb70f1e66ff00dfbd4ad7c0df7990.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-urlconnection/3.6.0/3f9b16b774f2c36cfd86dd2053d0b3059531dacc/okhttp-urlconnection-3.6.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="3f9b16b774f2c36cfd86dd2053d0b3059531dacc">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-3.6.0_64559dbc7600e6d5c489251061cf8f7a8bb12f91.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/.gradle/caches/modules-2/files-2.1/com.facebook.fbui.textlayoutbuilder/staticlayout-proxy/1.0/f162442a19fff13995fbd51ba414d9ee05579080/staticlayout-proxy-1.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="f162442a19fff13995fbd51ba414d9ee05579080">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/staticlayout-proxy-1.0_57e00cc8bd3378839793a85ac26d6aa2eaf8eab8.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/bolts-tasks-1.4.0_b4d8ba684b7d04ca44ad001cd6ef9eecd15646fc.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/puntOs/react-native-fetch-blob/unspecified/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="d51c7b0b9a6b6ade24eada103ecc1c8fd7a3df64">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/puntOs-react-native-fetch-blob-unspecified_292005a46c7ee13911e04e464e1438f63be92c49.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1_5a356b130d7c2a677565296153bf449c65f8f1b4.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.13.0/a9283170b7305c8d92d25aff02a6ab7e45d06cbe/okio-1.13.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="a9283170b7305c8d92d25aff02a6ab7e45d06cbe">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/okio-1.13.0_efbc345db16202d7e2c24142eec0b9a43b0eb27c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/.gradle/caches/modules-2/files-2.1/com.drewnoakes/metadata-extractor/2.9.1/53fdf22be10c9d426ec63431c7342895bc642261/metadata-extractor-2.9.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="53fdf22be10c9d426ec63431c7342895bc642261">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/metadata-extractor-2.9.1_9701e58f2dfd89daac706d92036e35aff1726714.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/puntOs/react-native-camera/unspecified/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="76ccf697e924ad7e66f2a5ba8a3cbede5734ad4c">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/puntOs-react-native-camera-unspecified_03c137ba3aa414e7b5d1ebc263d200adaf7479d0.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/.gradle/caches/modules-2/files-2.1/com.google.zxing/core/3.2.1/2287494d4f5f9f3a9a2bb6980e3f32053721b315/core-3.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="2287494d4f5f9f3a9a2bb6980e3f32053721b315">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/core-3.2.1_fca08983329dedce07bbf016653bfd606c01aeec.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.0/5871fb60dc68d67da54a663c3fd636a10a532948/jsr305-3.0.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="5871fb60dc68d67da54a663c3fd636a10a532948">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/jsr305-3.0.0_d21c563ee81b36d0ec8a6af94c5e9043c4123fda.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/1.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="c65a2e39d54023bac3aef64a2f0cff89289c7ff6">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-drawee-1.3.0_25e0f0b668031bac2a1e724c374edef691b7ab21.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="6975da39a7040257bd51d21a231b76c915872d38">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/javax.inject-1_cba0ac64f89422b3c10647d75e84bb1751b6dd97.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/1.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="37345de2ed2772f385eaeec37a9c2ff0fea99ad7">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fbcore-1.3.0_15fb44735feaf311cd9f6015a36da9d82d765b69.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.50.4/jars/libs/infer-annotations-4.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="9809e90be788acdb479b2b44e2112f3295a03068">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/infer-annotations-4.0_45eee2b061e03f7bc219214e006c6f59b169ba8e.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.facebook.soloader/soloader/0.1.0/jars/classes.jar"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.facebook.soloader\soloader\0.1.0\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="8f615bca00639150c9eb6175d4b5471193f70794">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/com.facebook.soloader-soloader-0.1.0_7e9e638f68a2c4883734e473c15da974b521d42e.jar" />
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\com.facebook.soloader-soloader-0.1.0_dc66dd809c14361a068dad9d9371213d056768f6.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.50.4/jars/classes.jar"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.facebook.fresco\imagepipeline-okhttp3\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="c03c08c9934b23c8c09c803345ec51a74119127b">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-imagepipeline-okhttp3-1.3.0_ef1745cb857baf7107229ce66a8a60c084495210.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\3.0.0\5871fb60dc68d67da54a663c3fd636a10a532948\jsr305-3.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="5871fb60dc68d67da54a663c3fd636a10a532948">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\jsr305-3.0.0_57ba4b951e365cad2b39d2e0280725290ea69fe1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\.gradle\caches\modules-2\files-2.1\com.facebook.fbui.textlayoutbuilder\staticlayout-proxy\1.0\f162442a19fff13995fbd51ba414d9ee05579080\staticlayout-proxy-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="f162442a19fff13995fbd51ba414d9ee05579080">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\staticlayout-proxy-1.0_1fd76268a1ce9df7dbbb154888883733bc185824.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\.gradle\caches\modules-2\files-2.1\com.google.zxing\core\3.2.1\2287494d4f5f9f3a9a2bb6980e3f32053721b315\core-3.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="2287494d4f5f9f3a9a2bb6980e3f32053721b315">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\core-3.2.1_374f33fc25c0c4ec64768ef97e1077d913ef02fa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\puntOs\react-native-fetch-blob\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="5aca1188aec5f45a7580589b8537e9a8a4d9a86f">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\puntOs-react-native-fetch-blob-unspecified_02f0a68f98cbad567846c5e107e3eec55c2e8c9d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.facebook.fbui.textlayoutbuilder\textlayoutbuilder\1.0.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="f90b593491e4044903f0bbf68dc3fa2790b151b9">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\com.facebook.fbui.textlayoutbuilder-textlayoutbuilder-1.0.0_d2bfca502db8d4f03fdab5db251cd5c395d5474e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1_e19153e676648b5cc8cbd9791bd1880e8e965ba2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.6.0\69edde9fc4b01c9fd51d25b83428837478c27254\okhttp-3.6.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\okhttp-3.6.0_8f2606ed7c75619b8a59cd7ef75a6e87274abcf1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\puntOs\react-native-vector-icons\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="f2cf527de8d0bd35d72088fafea02395ba4a9eec">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\puntOs-react-native-vector-icons-unspecified_d7894781d49a410663250fff51fbac75311080bc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp-urlconnection\3.6.0\3f9b16b774f2c36cfd86dd2053d0b3059531dacc\okhttp-urlconnection-3.6.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="3f9b16b774f2c36cfd86dd2053d0b3059531dacc">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\okhttp-urlconnection-3.6.0_37debf7cc00ad5e1a5c77b38dc2b226dea44e9dd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\.gradle\caches\modules-2\files-2.1\com.adobe.xmp\xmpcore\5.1.2\55615fa2582424e38705487d1d3969af8554f637\xmpcore-5.1.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="55615fa2582424e38705487d1d3969af8554f637">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\xmpcore-5.1.2_2b358b1e8395cc199a9d04ee916c32ca391bb5f4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.0.1_9eba14b6ee869630b8fda7fcec5df1ae85ff2256.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\puntOs\react-native-camera\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="141aa436ec711c43de370a7f156fc19fbe53a469">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\puntOs-react-native-camera-unspecified_4a6c8f7666b7aea980409785d01cee7c741e614e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.facebook.react\react-native\0.50.4\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="f768861356f4cd8613da447181fd15c3f584f52d">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/com.facebook.react-react-native-0.50.4_31a136ed4b73c305e965407b883d9861612ffccb.jar" />
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\com.facebook.react-react-native-0.50.4_abbc5e63f2851ac8ec5686f7476589b5d377b534.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/1.3.0/jars/classes.jar"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.facebook.fresco\fbcore\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="37345de2ed2772f385eaeec37a9c2ff0fea99ad7">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-fbcore-1.3.0_1f02786ee12740bab2f74f45155799a4ee549ca8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.facebook.fresco\fresco\1.3.0\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="fe85b87215e405f5917d40ae4960488ac9224b74">
-        <dex dex="/Users/hectorgarcia/Documents/Agosto2017/Capstone-2017/ReactProject/puntOs/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fresco-1.3.0_daac1f02102a890fa6c85576f3976c5843ea9cbb.jar" />
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-fresco-1.3.0_c3bab67e689ff47c03beefdd6faff93bfa925998.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.facebook.fresco\drawee\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="c65a2e39d54023bac3aef64a2f0cff89289c7ff6">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-drawee-1.3.0_2f84b7c607ac1d7c35d6c9841aa1b462c332470d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.facebook.fresco\imagepipeline\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="48c7f54c2515a2312d3a4481d10c43fbb807f3af">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-imagepipeline-1.3.0_5a240c489ef446fa0e4b474ec255fb8e53ef6bde.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.13.0\a9283170b7305c8d92d25aff02a6ab7e45d06cbe\okio-1.13.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="a9283170b7305c8d92d25aff02a6ab7e45d06cbe">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\okio-1.13.0_1f62e70a253b929f4eda5025e41e86bb2201dba2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.facebook.fresco\imagepipeline-base\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="72128af126ddd7d6252da9357fe560d3abcdfb0c">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-imagepipeline-base-1.3.0_90738a20d39c618a4e848f7b931193da6d15c4e1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1_865633d155919e34a524815fe540e8d30763821a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-tasks\1.4.0\d85884acf6810a3bbbecb587f239005cbc846dc4\bolts-tasks-1.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\bolts-tasks-1.4.0_87ee357e3784e3c02444c2e55b1e069813f526cc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\.gradle\caches\modules-2\files-2.1\com.drewnoakes\metadata-extractor\2.9.1\53fdf22be10c9d426ec63431c7342895bc642261\metadata-extractor-2.9.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="53fdf22be10c9d426ec63431c7342895bc642261">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\metadata-extractor-2.9.1_5f513aa95aded3f29762759a33b0d7b733654e52.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\.gradle\caches\modules-2\files-2.1\javax.inject\javax.inject\1\6975da39a7040257bd51d21a231b76c915872d38\javax.inject-1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\javax.inject-1_54f2777ccade7e8241e281a642bf6d8c7a983eb7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\exploded-aar\com.facebook.react\react-native\0.50.4\jars\libs\infer-annotations-4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="9809e90be788acdb479b2b44e2112f3295a03068">
+        <dex dex="C:\Users\Edgardo\Documents\Capstone\puntOs\android\app\build\intermediates\pre-dexed\debug\infer-annotations-4.0_ec1cb467bcee0a0d069f6f6126fc09acf60d40fd.jar" />
     </item>
 
 </items>
