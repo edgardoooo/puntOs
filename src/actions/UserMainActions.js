@@ -11,9 +11,11 @@ import {
   USER_SECONDARY_FILTER_UPDATE,
   USER_SOCIALS_UPDATE,
   SET_PROFILE_UPDATE,
-  GET_FOLLOWING,
   LOGIN_USER_SUCCESS,
-  LEADERBOARD_UPDATE} from './types';
+  POST_REVIEW_CHANGE,
+  LEADERBOARD_UPDATE
+ } from './types';
+
 import { Actions } from 'react-native-router-flux';
 import { ShareDialog } from 'react-native-fbsdk';
 import axios from 'axios';
@@ -430,6 +432,32 @@ export const verifyCheckin = (user_id, businessID) => {
           dispatch({ type: USER_MAIN_UPDATE, payload: {prop: 'hasCheckedIn', value: true }});
         }
       });
+    });
+  }
+}
+
+export const verifyForPreviouslyReview = (user_id, businessID, businessName) => {
+  return (dispatch) => {
+    var flag = 0;
+    firebase.database().ref('/Reviews').orderByChild('uid').equalTo(user_id).once('value', snapshot => {
+      snapshot.forEach(child_node => {
+        if(businessID === child_node.val().businessID){
+           flag =1;
+        }
+      }) 
+    }).then(() => {
+        if(flag == 0 ){
+          dispatch({type: POST_REVIEW_CHANGE, payload: {prop: "businessID", value: businessID}});
+          dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'uid', value: user_id}});
+          dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'businessName', value: businessName }});
+          Actions.PostReviewView();
+        } else {
+          dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'hasReviewed', value: true }});
+          Alert.alert('Notification:','Already Posted a Review on Business', 
+          [{text: 'OK', onPress: () => {
+           
+          }}]);
+        }
     });
   }
 }

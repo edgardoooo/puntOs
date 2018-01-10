@@ -26,6 +26,7 @@ const INITIAL_STATE = {
     cameraActive: true,
     checkin: false,
     hasCheckedIn: false,
+    hasReviewed: false,
     openMenu: false,
     checkins: {},
     promos: {},
@@ -71,6 +72,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USER_MAIN_UPDATE:
+      console.log(action.payload);
       return { ...state, [action.payload.prop]: action.payload.value };
     case USER_PROFILE_UPDATE:
     {

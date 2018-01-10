@@ -245,19 +245,23 @@ onReviewSubmission () {
                this.props.submitReview({
                    businessID: this.props.businessID,
                    uid: this.props.uid,
-                   username: this.props.username,
+                   username: this.props.user.name,
                    image: responseData,
                    rating: this.props.rating,
                    date: this.props.date,
                    caption: this.props.caption,
                    text: this.props.text,
                    tallied: this.props.tallied,
-                   userIcon: this.props.userIcon,
+                   userIcon: this.props.user.image,
                    businessName: this.props.businessName,
                });
                this.props.givePointsForReview(this.props.uid, this.props.user);
                this.props.resetPostReview();
-               this.props.postReviewChange({ prop: 'message', value: 'Review Posted Successfully'});
+               Alert.alert('Notification:','Review has been posted!', 
+               [{text: 'OK', onPress: () => {
+                    Actions.pop();
+               }}]);
+               
            })
     } else {
         this.props.postReviewChange({ prop: 'loading', value: false });
