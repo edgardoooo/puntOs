@@ -4,6 +4,7 @@ import { InputLine, Button, Spinner } from './common';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { inviteFriend, userMainUpdate } from '../actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Actions } from 'react-native-router-flux';
 
 class InviteFriends extends Component {
@@ -26,6 +27,12 @@ class InviteFriends extends Component {
   render() {
     const { user, inviteEmail } = this.props;
     return (
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#ecedee', flex: 1 }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.backgroundStyle}
+      scrollEnabled={true}
+      >
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.backgroundStyle}>
         <View style={{ flex: 7, justifyContent: 'center'}}>
@@ -59,6 +66,7 @@ class InviteFriends extends Component {
         </View>
       </View>
       </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     );
   }
 }

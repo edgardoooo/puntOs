@@ -377,7 +377,7 @@ exports.approveBusinessAccount = functions.https.onRequest((req, res) => {
                   checkin_response.businessName = businessObj.businessName;
                   checkin_response.pointsEarned = 50;
                   admin.database().ref(`users/${user_id}`).once('value', user => {
-                    const today = new Date().toISOString().substring(0,10);
+                    const today = new Date().toISOString();
                     const userObj = user.val();
                     const age = (moment(new Date(today)).diff(moment(new Date(userObj.birthdate)), 'minutes')/525600).toFixed(0);
                     const checkin_in = {age: age, businessID: businessID, businessName: businessObj.businessName, city: userObj.hometown,
@@ -502,7 +502,7 @@ exports.getPoints = functions.https.onRequest((req,res) => {
   const email = req.query.email;
   const response = {gotPoints: false, message: '', points: 0};
   var hasUsed = false;
-  var inviteObj = {};
+  var invite_obj = {};
   admin.database().ref(`/invites/`).orderByChild('invitedEmail').equalTo(email).once('value',invites => {
     const invites_obj = invites.val();
     console.log(invites_obj)
@@ -510,7 +510,8 @@ exports.getPoints = functions.https.onRequest((req,res) => {
     invites.forEach(invite => {
       if(invite.val().used){
         hasUsed = true;
-      } else if(invite.code === code){
+      } else if(invite.val().code === code){
+        //console.log('Entre aqui codigo machea')
         invite_obj = invite.val();
         invite_obj['key'] = invite.key;
       }
@@ -520,7 +521,7 @@ exports.getPoints = functions.https.onRequest((req,res) => {
       response.message = 'You have used an invitation promo code before. Cannot redeem multiple invitation codes. Sorry.';
       return res.status(200).send(response);
     } else {
-      if(invite_obj){
+      if(invite_obj.key){
         const inviter = invite_obj.inviterId;
         const invite_id = invite_obj.key;
         const inviter_name = invite_obj.inviterName;

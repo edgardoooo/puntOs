@@ -9,7 +9,7 @@ import {
   LEADERBOARD_UPDATE,
   GET_FOLLOWING,
   USER_PRIMARY_FILTER_UPDATE,
-  USER_SECONDARY_FILTER_UPDATE } from '../actions/types';
+  USER_SECONDARY_FILTER_UPDATE} from '../actions/types';
 
 const INITIAL_STATE = {
     name: '',
@@ -65,7 +65,8 @@ const INITIAL_STATE = {
     inviteLoading: '',
     rank: 0,
     promoCode: '',
-    promoLoading: ''
+    promoLoading: '',
+    hasReviewed: false
 };
 
 export default (state = INITIAL_STATE, action) => {

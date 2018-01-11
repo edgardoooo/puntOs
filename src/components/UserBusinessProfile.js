@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, LayoutAnimation, TouchableWithoutFeedback, Tabbar, Alert } from 'react-native';
 import StarRating from 'react-native-star-rating';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { checkin, businessProfileUpdate, getBusinessProfile, getReviews, getCheckins, getCoupons, getCheckinsToday, getCouponsToday, getPosts, postReviewChange, userMainUpdate, verifyCheckin, getUserProfile, getFollowing, userFollowBusiness, userUnfollowBusiness } from '../actions';
+import { checkin, businessProfileUpdate, getBusinessProfile, getReviews, getCheckins, getCoupons,
+  getCheckinsToday, getCouponsToday, getPosts, postReviewChange, userMainUpdate, verifyCheckin,
+  getUserProfile, getFollowing, userFollowBusiness, userUnfollowBusiness, verifyForPreviouslyReview } from '../actions';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ReviewList from './ReviewList';
@@ -28,6 +30,7 @@ class UserBusinessProfile extends Component {
     this.props.getCouponsToday(businessID);
     this.props.getPosts(businessID);
     this.props.verifyCheckin(this.props.user_id, this.props.uid);
+    this.props.verifyForPreviouslyReview(this.props.user_id, this.props.uid, this.props.businessName)
   }
 /*
   componentWillUpdate(){
@@ -39,10 +42,10 @@ class UserBusinessProfile extends Component {
     var businessID = this.props.uid;
     var bName = this.props.user.businessName;
     var bIcon = this.props.user.image;
-    console.log('User ID:')
-    console.log(userID)
-    console.log('Business ID:')
-    console.log(businessID)
+    //console.log('User ID:')
+    //console.log(userID)
+    //console.log('Business ID:')
+    //console.log(businessID)
     this.props.userFollowBusiness(userID, businessID, bName, bIcon);
   }
 
@@ -64,8 +67,8 @@ class UserBusinessProfile extends Component {
   }
 
   renderFollowButton(uid, bid, following) {
-    console.log("Following:");
-    console.log(following);
+    //console.log("Following:");
+    //console.log(following);
     if (this.userIsFollowing(uid, bid, following)) {
       return (
         <TouchableOpacity style={styles.followButtonStyle} onPress={() => this.unfollow()}>
@@ -85,6 +88,8 @@ class UserBusinessProfile extends Component {
   componentWillUnmount() {
     this.props.userMainUpdate({ prop: 'cameraActive', value: true });
     this.props.userMainUpdate({ prop: 'hasCheckedIn', value: false });
+    this.props.userMainUpdate({ prop: 'hasReviewed', value: false });
+
   }
 
   renderContent(){
@@ -172,6 +177,36 @@ class UserBusinessProfile extends Component {
       );
       }
 
+      renderReviewButton(){
+        if(this.props.hasCheckedIn){
+          if(this.props.hasReviewed){
+            return;
+          }
+          else {
+            return (
+              <View style={{ flexDirection: 'row', height: 50, backgroundColor: '#0084b4'}}>
+              <TouchableOpacity style={{ flex:1, alignSelf: 'stretch', borderWidth: 1, borderColor: 'white'}} onPress={() =>  {
+               //if(this.props.hasCheckedIn){
+                   this.props.postReviewChange( {prop: "businessID", value: this.props.uid});
+                   Actions.PostReviewView();
+              // }
+               //else {
+                // Alert.alert('Notification:','Must Check-in to Business',
+                // [{text: 'OK', onPress: () => {
+
+                // }}]);
+               //}
+             }}>
+             <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center', alignItems: 'center' }}>
+             <Icon name='ios-create' size= {20} color='white' style={{ alignSelf: 'center', marginRight: 5 }} />
+             </View>
+            </TouchableOpacity>
+            </View>
+          );
+          }
+      }
+    }
+
   callCheckin(){
     this.props.checkin(firebase.auth().currentUser.uid,this.props.uid, this.props.name);
   }
@@ -184,7 +219,7 @@ class UserBusinessProfile extends Component {
           <View style={{ flex: 1, flexDirection: 'column' }}>
             <View style={{ flex: 1, flexDirection: 'row', paddingTop: 20 }}>
             <View style={{ flex: 1, justifyContent: 'center'}} >
-            <Icon name='ios-arrow-back' size= {30} color='#0084b4' onPress={()=> Actions.pop()} style={{ alignSelf: 'flex-start', paddingLeft: 5 }} />
+            <Icon name='ios-arrow-back' size= {35} color='#0084b4' onPress={()=> Actions.pop()} style={{ alignSelf: 'flex-start', paddingLeft: 5 }} />
             </View>
             </View>
             <View style={{ flex: 5, flexDirection: 'row', marginBottom: 10 }}>
@@ -227,24 +262,7 @@ class UserBusinessProfile extends Component {
         </View>
           {this.renderTabs()}
           {this.renderContent()}
-          <View style={{ flexDirection: 'row', height: 50, backgroundColor: '#0084b4'}}>
-             <TouchableOpacity style={{ flex:1, alignSelf: 'stretch', borderWidth: 1, borderColor: 'white'}} onPress={() =>  {
-                if(this.props.hasCheckedIn){
-                    this.props.postReviewChange( {prop: "businessID", value: this.props.uid});
-                    Actions.PostReviewView();
-                }
-                else {
-                  Alert.alert('Notification:','Must Check-in to Business',
-                  [{text: 'OK', onPress: () => {
-
-                  }}]);
-                }
-               }}>
-              <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center', alignItems: 'center' }}>
-              <Icon name='ios-create' size= {20} color='white' style={{ alignSelf: 'center', marginRight: 5 }} />
-              </View>
-             </TouchableOpacity>
-          </View>
+          {this.renderReviewButton()}
         </View>
     );
   }
@@ -339,5 +357,6 @@ export default connect(mapStateToProps,{
   userFollowBusiness,
   userUnfollowBusiness,
   userMainUpdate,
-  verifyCheckin
+  verifyCheckin,
+  verifyForPreviouslyReview
  })(UserBusinessProfile);

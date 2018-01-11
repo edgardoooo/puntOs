@@ -3,7 +3,8 @@ import React, { Component, PureComponent } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { userLikeItem, userUnlikeItem, userSetExpired, businessMainUpdate, setCouponProfile, shareItemUser } from '../actions';
+import { userLikeItem, userUnlikeItem, userSetExpired, businessMainUpdate,
+  setCouponProfile, shareItemUser, businessExists } from '../actions';
 import { Card, CardSection, Button } from './common';
 import { Actions } from 'react-native-router-flux';
 var moment = require('moment');
@@ -219,8 +220,8 @@ class UserPromoItem extends PureComponent {
                         </View>
                         <View style={{flex:1, flexDirection: 'column'}}>
                         <TouchableOpacity onPress={ () => {
-                            this.props.businessMainUpdate({ prop: 'uid', value: businessID});
-                            Actions.UserBusinessProfile();
+                          this.props.businessMainUpdate({ prop: 'uid', value: businessID});
+                          this.props.businessExists(businessID);
                         }}>
                             <Text style={authorNameStyle}>
                                 {name}
@@ -310,4 +311,4 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps,{ userLikeItem, userUnlikeItem,
-  userSetExpired, businessMainUpdate, setCouponProfile, shareItemUser })(UserPromoItem);
+  userSetExpired, businessMainUpdate, setCouponProfile, shareItemUser, businessExists })(UserPromoItem);

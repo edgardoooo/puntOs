@@ -13,7 +13,8 @@ import {
   SET_PROFILE_UPDATE,
   GET_FOLLOWING,
   LOGIN_USER_SUCCESS,
-  LEADERBOARD_UPDATE} from './types';
+  LEADERBOARD_UPDATE,
+  POST_REVIEW_CHANGE} from './types';
 import { Actions } from 'react-native-router-flux';
 import { ShareDialog } from 'react-native-fbsdk';
 import axios from 'axios';
@@ -63,12 +64,13 @@ export const getCheckins = (uid) => {
   return (dispatch) => {
     //firebase.database().ref(`/Reviews`).orderByChild(`businessID`).equalTo(uid).on('value', snapshot => {
     //console.log(uid);
-    firebase.database().ref(`/Checkins`).orderByChild(`uid`).equalTo(uid).once('value', snapshot => {
+    firebase.database().ref(`/Checkins`).orderByChild(`uid`).equalTo(uid).on('value', snapshot => {
       //console.log(snapshot.val());
       let checkinList = [];
       let counter = 0;
       snapshot.forEach(child_node => {
-        checkinList.push({...child_node.val(), id: counter});
+        checkinList.splice(0,0,{ ...child_node.val(), id: counter});
+        //checkinList.push({...child_node.val(), id: counter});
         counter++;
       });
       dispatch({ type: USER_CHECKINS_UPDATE, payload: checkinList});
@@ -82,7 +84,8 @@ export const getMyReviews = (uid) => {
       let reviewList = [];
       let counter = 0;
       snapshot.forEach(child_node => {
-        reviewList.push({...child_node.val(), id: counter});
+        reviewList.splice(0,0,{ ...child_node.val(), id: counter});
+        //reviewList.push({...child_node.val(), id: counter});
         counter++;
       });
       //console.log(reviewList)
@@ -133,9 +136,9 @@ export const userGetPromos = (uid, pf, sf, fol) => {
             let counter = 0;
             snapshot.forEach(child_node => {
               var child_key = child_node.key;
-              console.log('Looking at filtering by favorites...-----------');
-              console.log(fol);
-              console.log(child_node.val().businessID);
+              //console.log('Looking at filtering by favorites...-----------');
+              //console.log(fol);
+              //console.log(child_node.val().businessID);
               if (child_node.val().businessID in fol) {
                 promoList.splice(0,0,{ ...child_node.val(), id: counter, pid: child_key});
                 counter++;
@@ -148,7 +151,7 @@ export const userGetPromos = (uid, pf, sf, fol) => {
         }
         //FILTERING BY LOCATION
         else if (sf == 'Location') {
-          console.log('Filtering by location...');
+          //console.log('Filtering by location...');
           return dispatch(userGetPromosByLocation(uid, pf, sf, fol));
         }
         //FILTER BY CATEGORY
@@ -192,9 +195,9 @@ export const userGetPromos = (uid, pf, sf, fol) => {
             let counter = 0;
             snapshot.forEach(child_node => {
               var child_key = child_node.key;
-              console.log('Looking at filtering by favorites...-----------');
-              console.log(fol);
-              console.log(child_node.val().businessID);
+              //console.log('Looking at filtering by favorites...-----------');
+              //console.log(fol);
+              //console.log(child_node.val().businessID);
               if (child_node.val().businessID in fol) {
                 promoList.splice(0,0,{ ...child_node.val(), id: counter, isCoupon: true, pid: child_key});
                 counter++;
@@ -207,7 +210,7 @@ export const userGetPromos = (uid, pf, sf, fol) => {
         }
         //FILTERING BY LOCATION
         else if (sf == 'Location') {
-          console.log('Filtering by location...');
+          //console.log('Filtering by location...');
           return dispatch(userGetCouponsByLocation(uid, pf, sf, fol));
         }
         //
@@ -424,7 +427,7 @@ export const getPoints = (uid, code, email) => {
 
 export const verifyCheckin = (user_id, businessID) => {
   return (dispatch) => {
-    firebase.database().ref('/Checkins').orderByChild('uid').equalTo(user_id).once('value', snapshot => {
+    firebase.database().ref('/Checkins').orderByChild('uid').equalTo(user_id).on('value', snapshot => {
       snapshot.forEach(child_node => {
         if(businessID === child_node.val().businessID){
           dispatch({ type: USER_MAIN_UPDATE, payload: {prop: 'hasCheckedIn', value: true }});
@@ -503,12 +506,12 @@ export const shareItemUser = (uid, pid, isCoupon, image, text, businessID, busin
 export const checkin = (user_id, businessID, username) => {
   return (dispatch) => {navigator.geolocation.getCurrentPosition(
   (position) => {
-    console.log(businessID)
-    console.log(user_id)
-    console.log(username)
+    //console.log(businessID)
+    //console.log(user_id)
+    //console.log(username)
     const user_name = encodeURIComponent(username.trim())
     const req_url = 'https://us-central1-puntos-capstone2017.cloudfunctions.net/checkIn?uid=' + user_id + '&bid=' + businessID + '&latitude=' + position.coords.latitude + '&longitude=' + position.coords.longitude + '&username=' + user_name;
-    console.log(req_url)
+    //console.log(req_url)
     axios.get(req_url)
       .then(response => {
         if( response.data.checkedIn){
@@ -593,8 +596,8 @@ export const getLeaderboard = (uid) => {
       });
       leaderList = sortObj(leaderList, 'points');
       leaderList.reverse();
-      console.log("Leaderboard list:");
-      console.log(leaderList);
+      //console.log("Leaderboard list:");
+      //console.log(leaderList);
       var count = 0;
       leaderList.forEach(user => {
         if(user.key === uid){
@@ -626,7 +629,7 @@ export const userFollowBusiness = (uid, bid, bname, bicon) => {
     imgToUse = '';
   }
   const like_obj = {[bid]: {['name']: bname, ['icon']: imgToUse}};
-  console.log('The like object: ' + like_obj);
+  //console.log('The like object: ' + like_obj);
   return (dispatch) => {
     firebase.database().ref(`/users/${uid}`).child('following').update(like_obj).catch((error) => {
       Alert.alert('Could not process follow at this time', 'Sorry', {text: 'OK'});
@@ -809,6 +812,33 @@ export const updateUserProfilePic = (image_path, uid) =>{
     dispatch({type: USER_MAIN_UPDATE, payload:{prop: 'uploadError', value: 'Could not upload image.'}});
   });
 };
+};
+
+export const verifyForPreviouslyReview = (user_id, businessID, businessName) => {
+  return (dispatch) => {
+    var flag = 0;
+    firebase.database().ref('/Reviews').orderByChild('uid').equalTo(user_id).once('value', snapshot => {
+      snapshot.forEach(child_node => {
+        if(businessID === child_node.val().businessID){
+           flag =1;
+        }
+      })
+    }).then(() => {
+        if(flag === 0 ){
+          dispatch({type: POST_REVIEW_CHANGE, payload: {prop: "businessID", value: businessID}});
+          dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'hasReviewed', value: false}});
+          dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'uid', value: user_id}});
+          dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'businessName', value: businessName }});
+        //  Actions.PostReviewView();
+        } else {
+          dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'hasReviewed', value: true }});
+          //Alert.alert('Notification:','Already Posted a Review on Business',
+          //[{text: 'OK', onPress: () => {
+
+          //}}]);
+        }
+    });
+  }
 };
 
 function sortObj(list, key) {
