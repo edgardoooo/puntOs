@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableWithoutFeedback, Keyboard } from 'react-nat
 import { InputLine, Button, Spinner } from './common';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { getPoints, userMainUpdate } from '../actions';
 import { Actions } from 'react-native-router-flux';
 
@@ -46,6 +47,12 @@ class GetPoints extends Component {
     const { user, promoCode } = this.props;
     //console.log(user)
     return (
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#ecedee', flex: 1 }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.backgroundStyle}
+      scrollEnabled={true}
+      >
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.backgroundStyle}>
         <View style={{ flex: 5, justifyContent: 'center'}}>
@@ -75,9 +82,11 @@ class GetPoints extends Component {
         </View>
       </View>
       </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     );
   }
 }
+
 
 const styles ={
 backgroundStyle: {

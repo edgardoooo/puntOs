@@ -7,6 +7,7 @@ import { businessFormUpdate, businessSignUp, getLocation } from '../actions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { BUSINESS_NAME_REGEX, EMAIL_REGEX,
   USERNAME_REGEX, PASSWORD_REGEX, ZIP_REGEX, CITY_LIST, PHONE_REGEX } from './../constants';
 
@@ -122,7 +123,7 @@ class BusinessSignUpForm extends Component {
 
   renderPicker(){
     if(this.state.pickerOpen){
-      console.log(this.state.cityItems)
+      //console.log(this.state.cityItems)
       return(
       <View style={{ flex: 1, alignSelf: 'stretch', marginRight: 40, marginLeft: 40}}>
       <TouchableOpacity onPress={() => this.togglePicker()}>
@@ -535,13 +536,13 @@ class BusinessSignUpForm extends Component {
     if (step === 4){
       switch(size){
         case 'Small':
-          return <Text style={{ fontSize: 16, color: '#f97171', fontWeight: 'bold', marginBottom: -4 }}>40 ft. radius</Text>
+          return <Text style={{ fontSize: 16, color: '#f97171', fontWeight: 'bold', marginBottom: -15 }}>40 ft. radius</Text>
         case 'Medium':
-          return <Text style={{ fontSize: 16, color: '#f97171', fontWeight: 'bold', marginBottom: -4  }}>60 ft. radius</Text>
+          return <Text style={{ fontSize: 16, color: '#f97171', fontWeight: 'bold', marginBottom: -15  }}>60 ft. radius</Text>
         case 'Large':
-          return <Text style={{ fontSize: 16, color: '#f97171', fontWeight: 'bold', marginBottom: -4  }}>80 ft. radius</Text>
+          return <Text style={{ fontSize: 16, color: '#f97171', fontWeight: 'bold', marginBottom: -15  }}>80 ft. radius</Text>
         case 'XLarge':
-          return <Text style={{ fontSize: 16, color: '#f97171', fontWeight: 'bold', marginBottom: -4  }}>100 ft. radius</Text>
+          return <Text style={{ fontSize: 16, color: '#f97171', fontWeight: 'bold', marginBottom: -15  }}>100 ft. radius</Text>
         default:
           return;
       }
@@ -550,7 +551,12 @@ class BusinessSignUpForm extends Component {
 
   render() {
     return (
-      <ScrollView style={{ backgroundColor: '#fff' }}>
+
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#fff', flex: 1 }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      scrollEnabled={true}
+      >
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.backgroundStyle}>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingTop: 10, paddingBottom: 10 }}>
@@ -561,14 +567,14 @@ class BusinessSignUpForm extends Component {
           Business
           </Text>
         </View>
-      <View style={styles.containerStyle}>
+        <View style={styles.containerStyle}>
           {this.renderContent()}
           {this.renderError()}
           {this.renderButtons()}
-      </View>
+        </View>
       </View>
       </TouchableWithoutFeedback>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     );
   }
 }
@@ -603,8 +609,7 @@ const styles = {
   },
   sizeTextStyle: {
     fontSize: 20,
-    color: 'black',
-    marginBottom: -10
+    color: 'black'
   },
 bigStyle: {
   fontSize: 50,

@@ -25,7 +25,7 @@ class UserFollowingList extends Component {
 
 const mapStateToProps = state => {
   var { user } = state.userMain;
-  console.log('Following Display list: ' + state.userMain.following)
+  //console.log('Following Display list: ' + state.userMain.following)
   const following = _.map(state.userMain.following, (val, key) => {
     return {...val, key};
   });

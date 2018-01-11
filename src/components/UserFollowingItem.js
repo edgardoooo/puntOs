@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { businessMainUpdate } from '../actions';
+import { businessMainUpdate, businessExists } from '../actions';
 import { Card } from './common';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -39,8 +39,8 @@ class UserFollowingItem extends Component {
                         {this.renderIcon(icon)}
                     </View>
                     <TouchableOpacity style={{marginLeft: 15, justifyContent: 'center'}} onPress={ () => {
-                        this.props.businessMainUpdate({ prop: 'uid', value: key});
-                        Actions.UserBusinessProfile();
+                      this.props.businessMainUpdate({ prop: 'uid', value: businessID});
+                      this.props.businessExists(businessID);
                     }}>
                         <Text style={{ fontSize: 18, fontWeight: 'bold'}}>
                             {name}
@@ -73,4 +73,4 @@ const styles = {
       }
 }
 
-export default connect(null,{businessMainUpdate})(UserFollowingItem);
+export default connect(null,{businessMainUpdate, businessExists})(UserFollowingItem);

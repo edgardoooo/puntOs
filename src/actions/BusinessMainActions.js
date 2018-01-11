@@ -72,6 +72,20 @@ export const updateProfilePic = (image_path, uid) =>{
 };
 };
 
+export const businessExists = (uid) => {
+      return (dispatch) => {
+      firebase.database().ref(`/users/${uid}`).once('value', snapshot => {
+        const user = snapshot.val();
+        //console.log(user.email)
+        if(user){
+          Actions.UserBusinessProfile();
+        } else {
+          Alert.alert('User not Found!','This business Account No Longer Exists', {text: 'OK'});
+        }
+      });
+        };
+      };
+
 
 export const getBusinessProfile = (uid) => {
       return (dispatch) => {

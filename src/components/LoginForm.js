@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { InputLine, Button, Spinner } from './common';
 import { connect } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { authFormUpdate, loginUser, forgotPassword } from '../actions';
 import { Actions } from 'react-native-router-flux';
 
@@ -40,7 +41,14 @@ renderButton() {
 
   render() {
     return (
-      <View style={styles.backgroundStyle}>
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#0084b4' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.backgroundStyle}
+      scrollEnabled={false}
+      >
+      {//<View style={styles.backgroundStyle}>}
+      }
       <Text style={styles.logoStyle}>
       puntOs
       </Text>
@@ -74,7 +82,9 @@ renderButton() {
         </Text>
         </TouchableOpacity>
       </View>
-      </View>
+      {//</View>}
+      }
+      </KeyboardAwareScrollView>
     );
   }
 }
