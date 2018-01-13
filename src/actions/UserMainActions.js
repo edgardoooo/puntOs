@@ -14,7 +14,8 @@ import {
   GET_FOLLOWING,
   LOGIN_USER_SUCCESS,
   LEADERBOARD_UPDATE,
-  POST_REVIEW_CHANGE} from './types';
+  POST_REVIEW_CHANGE,
+  USER_MAIN_RESET} from './types';
 import { Actions } from 'react-native-router-flux';
 import { ShareDialog } from 'react-native-fbsdk';
 import axios from 'axios';
@@ -22,6 +23,7 @@ const levels = [1000, 2500, 3750, 5625, 8450, 12650];
 const SWITCH_ACCOUNT = 'https://us-central1-puntos-capstone2017.cloudfunctions.net/switchAccount';
 var Utils = require('../components/common/Utils');
 var haversine = require('haversine');
+var moment = require('moment');
 
 export const userMainUpdate = ({ prop, value }) => {
   return {
@@ -35,6 +37,11 @@ export const getUserProfile = (uid) => {
     firebase.database().ref(`/users/${uid}`).on('value', snapshot => {
       const user = snapshot.val();
       dispatch({ type: USER_MAIN_UPDATE, payload: { prop: 'user', value: user }});
+      if(user.image){
+        dispatch({ type: USER_MAIN_UPDATE, payload: { prop: 'userImage', value: user.image }});
+      } else {
+        dispatch({ type: USER_MAIN_UPDATE, payload: { prop: 'userImage', value: '' }});
+      }
     });
   };
 };
@@ -437,7 +444,7 @@ export const verifyCheckin = (user_id, businessID) => {
   }
 }
 
-export const shareItemUser = (uid, pid, isCoupon, image, text, businessID, businessName, username) => {
+export const shareItemUser = (uid, pid, isCoupon, image, text, businessID, businessName, username, birthdate, city) => {
   const like_obj = {[uid]: 1};
   var shareContent = {
     contentType: 'link',
@@ -445,7 +452,10 @@ export const shareItemUser = (uid, pid, isCoupon, image, text, businessID, busin
     quote: '',
     title: ''
   };
-  var new_event = { businessName: businessName, date: new Date().toISOString() , eventType: '', username: username };
+  const today = new Date().toISOString();
+  const age = (moment(new Date(today)).diff(moment(new Date(birthdate)), 'minutes')/525600).toFixed(0);
+  var new_event = { businessName: businessName, date: new Date().toISOString() ,
+    eventType: '', username: username, city: city, age: age };
   const share_obj = {[uid]: 1};
   return (dispatch) => {
   if (isCoupon){
@@ -663,6 +673,8 @@ export const switchAccountUser = (email, password) => {
             );
             dispatch({ type: USER_MAIN_UPDATE, payload: {prop: 'switchLoading', value: false}});
             Actions.settingProfile({type: 'reset'});
+            //dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'userType', value: ''}});
+            //dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'uid', value: ''}});
           }).catch((error) => {
             console.log(error)
           });
@@ -726,9 +738,9 @@ export const getMyCheckins = (uid) => {
           counter++;
         });
         dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'totalCheckins', value: Object.keys(checkinList).length}});
-        var shortList = checkinList.slice(0,3);
+        //var shortList = checkinList.slice(0,3);
         //console.log(shortList)
-        shortList.forEach( checkin => {
+        checkinList.forEach( checkin => {
           const businessID = checkin.businessID;
           var image = '';
           firebase.database().ref(`/users/${businessID}`).once('value', snapshot =>{
@@ -738,9 +750,18 @@ export const getMyCheckins = (uid) => {
             checkin['image'] = image;
           });
         });
+        var shortList = checkinList.slice(0,3);
         dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'lastCheckins', value: shortList}});
+        dispatch({ type: USER_CHECKINS_UPDATE, payload: checkinList});
       });
     };
+};
+
+export const viewImage = (image) => {
+  return (dispatch) => {
+      dispatch({type: USER_MAIN_UPDATE, payload:{prop: 'viewImage', value: true}});
+      dispatch({type: USER_MAIN_UPDATE, payload:{prop: 'imageToView', value: image }});
+  };
 };
 
 export const getMyCoupons = (uid) => {
@@ -814,29 +835,48 @@ export const updateUserProfilePic = (image_path, uid) =>{
 };
 };
 
-export const verifyForPreviouslyReview = (user_id, businessID, businessName) => {
+export const verifyForPreviouslyReview = (user_id, businessID) => {
   return (dispatch) => {
     var flag = 0;
-    firebase.database().ref('/Reviews').orderByChild('uid').equalTo(user_id).once('value', snapshot => {
+    firebase.database().ref('/Reviews').orderByChild('uid').equalTo(user_id).on('value', snapshot => {
       snapshot.forEach(child_node => {
         if(businessID === child_node.val().businessID){
            flag =1;
         }
-      })
-    }).then(() => {
-        if(flag === 0 ){
-          dispatch({type: POST_REVIEW_CHANGE, payload: {prop: "businessID", value: businessID}});
-          dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'hasReviewed', value: false}});
-          dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'uid', value: user_id}});
-          dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'businessName', value: businessName }});
-        //  Actions.PostReviewView();
-        } else {
-          dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'hasReviewed', value: true }});
-          //Alert.alert('Notification:','Already Posted a Review on Business',
-          //[{text: 'OK', onPress: () => {
+      });
+      if(flag === 0 ){
+        dispatch({type: POST_REVIEW_CHANGE, payload: {prop: "businessID", value: businessID}});
+        dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'hasReviewed', value: false}});
+        dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'uid', value: user_id}});
+        console.log('Has not reviewed')
+        //dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'businessName', value: businessName }});
+      //  Actions.PostReviewView();
+      } else {
+        console.log('Has reviewed')
+        dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'hasReviewed', value: true }});
+        //Alert.alert('Notification:','Already Posted a Review on Business',
+        //[{text: 'OK', onPress: () => {
 
-          //}}]);
+        //}}]);
+      }
+    });
+  };
+};
+
+export const getNotifications = (user_id) => {
+  return (dispatch) => {
+    let notifications = [];
+    firebase.database().ref(`/Notifications/${user_id}`).on('value', snapshot => {
+      let counter = 0;
+      snapshot.forEach(child_node => {
+        if(child_node.val().uid === user_id){
+          notifications.splice(0,0,{ ...child_node.val(), id: counter });
+          counter++;
         }
+      });
+      notifications = sortObj(notifications, 'date');
+      notifications.reverse();
+      dispatch({ type: USER_MAIN_UPDATE, payload: {prop: 'notificationList', value: notifications }});
     });
   }
 };

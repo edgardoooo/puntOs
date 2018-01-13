@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Text, TouchableWithoutFeedback, View, LayoutAnimation, Image } from 'react-native';
+import { CardSection } from './common';
+import { connect } from 'react-redux';
 import StarRating from 'react-native-star-rating';
+import { viewImage, viewImageBusiness } from '../actions';
 var moment = require('moment');
+import firebase from 'firebase';
 
 class ReviewItem extends Component {
 
@@ -27,17 +31,59 @@ class ReviewItem extends Component {
     }
   }
 
+  renderIcon(image) {
+    if (image) {
+        return (
+          <Image
+          style={styles.thumbnailStyle}
+          source={{uri: image }}
+          />
+        );
+    }
+    else {
+      return(
+      <Image
+      style={styles.thumbnailStyle}
+      source={require('../assets/no-user-image.gif')}
+      />);
+    }
+}
+
+renderImage(image){
+  const current_user = firebase.auth().currentUser.uid;
+  if(this.props.user){
+  if(current_user===this.props.user.uid){
+    console.log('business side')
+    if(image){
+    return (
+      <TouchableWithoutFeedback onPress={ () => {
+        this.props.viewImageBusiness(image);
+      }}>
+        <Image style={styles.postImageStyle} source={{uri: image }} />
+      </TouchableWithoutFeedback>
+    );}
+  }}
+  if(this.props.uid){
+  if (current_user===this.props.uid){
+    if(image){
+    return (
+      <TouchableWithoutFeedback onPress={ () => {
+        this.props.viewImage(image);
+      }}>
+        <Image style={styles.postImageStyle} source={{uri: image }} />
+      </TouchableWithoutFeedback>
+    );}
+}
+}
+}
+
   render () {
-    const { date, rating, text, username, icon } = this.props.review;
+    const { date, rating, text, username, userIcon, image } = this.props.review;
     return (
         <View style={ styles.containerStyle }>
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flex: 1, alignSelf: 'flex-start', justifyContent: 'center', flexDirection: 'column', paddingLeft: 5, paddingTop: 10 }}>
-            <Image
-            style={styles.thumbnailStyle}
-            source={{ uri: icon }}
-            defaultSource={require('../assets/no-user-image.gif')}
-            />
+            {this.renderIcon(userIcon)}
             </View>
             <View style={{ flex: 6, justifyContent: 'center', flexDirection: 'column'}}>
               <Text style={{ fontWeight: 'bold', fontSize: 15, paddingTop: 5 }}>{username}</Text>
@@ -45,6 +91,9 @@ class ReviewItem extends Component {
               <Text style={{ paddingTop: 5, fontSize: 15 }}>{text}</Text>
             </View>
           </View>
+          <CardSection>
+          {this.renderImage(image)}
+          </CardSection>
           <View style={{ flexDirection: 'column', justifyContent: 'center', marginBottom: 10, marginTop: 5 }}>
             <View style={{ alignSelf: 'center', flexDirection: 'column' }}>
               <StarRating
@@ -89,7 +138,22 @@ containerStyle: {
   shadowRadius: 2,
   elevation: 1,
   marginTop: 5
+},
+postImageStyle: {
+    flex: 1,
+    alignSelf: 'stretch',
+    height: 150,
+    marginRight: 10,
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 5
 }
 };
 
-export default ReviewItem;
+const mapStateToProps = state => {
+  var { user } = state.businessMain;
+  var { uid } = state.userMain;
+  return { uid, user };
+}
+
+export default connect(mapStateToProps,{ viewImage, viewImageBusiness })(ReviewItem);

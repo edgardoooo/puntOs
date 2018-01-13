@@ -95,7 +95,7 @@ class RedeemCouponView extends Component {
                       user_points = user.points;
                     }
                     if (user_points > pointsValue){
-                        this.props.claimCoupon({ uid, coupon, user });
+                        this.props.claimCoupon({ uid, coupon, user, name });
                         this.props.updateClaimBy(uid, coupon.pid);
                         if(coupon.claimedBy.length == coupon.claimLimit){
                             this.props.setCouponToExpired(coupon.pid);

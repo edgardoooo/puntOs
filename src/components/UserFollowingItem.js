@@ -40,6 +40,7 @@ class UserFollowingItem extends Component {
                     </View>
                     <TouchableOpacity style={{marginLeft: 15, justifyContent: 'center'}} onPress={ () => {
                       this.props.businessMainUpdate({ prop: 'uid', value: businessID});
+                      this.props.businessMainUpdate({ prop: 'businessName', value: name});
                       this.props.businessExists(businessID);
                     }}>
                         <Text style={{ fontSize: 18, fontWeight: 'bold'}}>

@@ -339,7 +339,7 @@ exports.approveBusinessAccount = functions.https.onRequest((req, res) => {
     const user_id = req.query.uid;
     const latitude = req.query.latitude;
     const longitude = req.query.longitude;
-    var new_event = { businessName: '', date: new Date().toISOString() , eventType: 'checkIn', username: '' };
+    var new_event = { businessName: '', date: new Date().toISOString() , eventType: 'checkIn', username: '', age: 0, city: '' };
     new_event.username = req.query.username;
     var checkinFailed = false;
     var check_ins_today = 0;
@@ -382,6 +382,9 @@ exports.approveBusinessAccount = functions.https.onRequest((req, res) => {
                     const age = (moment(new Date(today)).diff(moment(new Date(userObj.birthdate)), 'minutes')/525600).toFixed(0);
                     const checkin_in = {age: age, businessID: businessID, businessName: businessObj.businessName, city: userObj.hometown,
                     date: today, name: userObj.name, uid: user_id, queryparam: businessID+today};
+                    new_event.age = age;
+                    new_event.city = userObj.hometown;
+                    //new_event = {...new_event, age: age, city: userObj.hometown}
                     admin.database().ref(`/Checkins`).once('value', checkins => {
                       checkins.ref.push(checkin_in).catch(() => {
                         checkin_response.message = 'Unable to checkin at this time.';
@@ -500,7 +503,8 @@ exports.getPoints = functions.https.onRequest((req,res) => {
   const uid = req.query.uid;
   const code = req.query.code;
   const email = req.query.email;
-  const response = {gotPoints: false, message: '', points: 0};
+  var response = {gotPoints: false, message: '', points: 0};
+  var invited_name = '';
   var hasUsed = false;
   var invite_obj = {};
   admin.database().ref(`/invites/`).orderByChild('invitedEmail').equalTo(email).once('value',invites => {
@@ -527,34 +531,39 @@ exports.getPoints = functions.https.onRequest((req,res) => {
         const inviter_name = invite_obj.inviterName;
         admin.database().ref(`users/${uid}`).once('value', user => {
           const current = user.val().points;
+          invited_name = (' ' + user.val().name).slice(1);
+          //console.log('Invited: ' + invited_name)
           const new_points = current + 200;
           user.ref.update({points: new_points});
+          admin.database().ref(`userRewards/${uid}`).once('value', user => {
+            const current = user.val().points;
+            const new_points = current + 200;
+            user.ref.update({points: new_points});
+          });
+          admin.database().ref(`users/${inviter}`).once('value', user => {
+            const current = user.val().points;
+            const new_points = current + 200;
+            user.ref.update({points: new_points});
+          });
+          admin.database().ref(`userRewards/${inviter}`).once('value', user => {
+            const current = user.val().points;
+            const new_points = current + 200;
+            user.ref.update({points: new_points});
+          });
+          const notificationObj = {ntype: 'invite', uid: inviter, invited: invited_name, invitedEmail: invite_obj.invitedEmail, date: new Date().toISOString() };
+          admin.database().ref(`/invites/${invite_id}`).update({used: true}).then(()=>{
+            response.message = 'Your invite promo code from '+ inviter_name + 'was processed! Invite more people and get 200 points!' ;
+            response.gotPoints = true;
+            response.points = '200';
+            admin.database().ref(`Notifications/${inviter}`).push(notificationObj);
+            return res.status(200).send(response);
+          }).catch((error)=>{
+            console.log(error)
+            response.message = 'An error ocurred! Please try again later.';
+            return res.status(200).send(response);
         });
-        admin.database().ref(`userRewards/${uid}`).once('value', user => {
-          const current = user.val().points;
-          const new_points = current + 200;
-          user.ref.update({points: new_points});
+
         });
-        admin.database().ref(`users/${inviter}`).once('value', user => {
-          const current = user.val().points;
-          const new_points = current + 200;
-          user.ref.update({points: new_points});
-        });
-        admin.database().ref(`userRewards/${inviter}`).once('value', user => {
-          const current = user.val().points;
-          const new_points = current + 200;
-          user.ref.update({points: new_points});
-        });
-        admin.database().ref(`/invites/${invite_id}`).update({used: true}).then(()=>{
-          response.message = 'Your invite promo code from '+ inviter_name + 'was processed! Invite more people and get 200 points!' ;
-          response.gotPoints = true;
-          response.points = '200';
-          return res.status(200).send(response);
-        }).catch((error)=>{
-          console.log(error)
-          response.message = 'An error ocurred! Please try again later.';
-          return res.status(200).send(response);
-        })
 
       } else {
         response.message = 'Your code does not match any of the invites we got on system. Please re-check your code and try again.';
@@ -634,3 +643,31 @@ exports.getPoints = functions.https.onRequest((req,res) => {
         }
       });
     });
+
+    exports.addCouponNotification = functions.database.ref('/Coupons/{cid}').onWrite(event =>{
+          const coupon = event.data.val();
+
+           admin.database().ref(`/users/${coupon.businessID}/followers`).once('value', snapshot => {
+            snapshot.forEach(child_node => {
+              var child_key = child_node.key;
+              const notification_entry = {
+                uid: child_key,
+                businessID: coupon.businessID,
+                businessName: coupon.name,
+                text: coupon.text,
+                ntype: 'coupon',
+                date: coupon.date
+              };
+              admin.database().ref(`/Notifications/${child_key}`).once('value', notifications => {
+                  notifications.ref.push(notification_entry).then(() => {
+                    console.log("Notification Created");
+                  }).catch((error) => {
+                    console.error(error);
+                  });
+              });
+            });
+
+          }).catch((error) => {
+            console.error(error);
+          });
+      });

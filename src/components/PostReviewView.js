@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import { 
-    View, 
-    Text, 
-    Image, 
-    TouchableWithoutFeedback, 
-    LayoutAnimation, 
+import {
+    View,
+    Text,
+    Image,
+    TouchableWithoutFeedback,
+    LayoutAnimation,
     ScrollView,
     CameraRoll,
     TouchableOpacity,
+    Alert,
+    Keyboard
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import StarRating from 'react-native-star-rating';
 import { InputBox, InputLine, Button, Spinner } from './common';
 import { Actions } from 'react-native-router-flux';
@@ -30,17 +33,17 @@ class PostReviewView extends Component {
     this.props.postReviewChange({ prop: 'uid', value: firebase.auth().currentUser.uid});
  }
 
- componentWillUpdate() {
+ /*componentWillUpdate() {
         LayoutAnimation.spring();
-  }
+  }*/
 
   render() {
 
-      const { 
-          thumbnailStyle, 
-          containerStyle, 
-          textStyle, 
-          ratingContainer, 
+      const {
+          thumbnailStyle,
+          containerStyle,
+          textStyle,
+          ratingContainer,
           backgroundStyle,
           lineInputOverstyle,
           inputBoxOverstyle,
@@ -59,11 +62,18 @@ class PostReviewView extends Component {
       } = this.props
 
     return (
-      <ScrollView style={backgroundStyle}>
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#fff', flex: 1 }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      scrollEnabled={true}
+      >
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.backgroundStyle}>
         <View style={containerStyle}>
+          {/*
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <Text
-                    style={{ 
+                    style={{
                         fontSize: 25,
                         paddingTop: 5,
                         paddingBottom: 15,
@@ -71,18 +81,20 @@ class PostReviewView extends Component {
                 >
                     Post Review
                 </Text>
+
             </View>
+            */}
             <View style={{ flex: 2 }}>
                 <TouchableWithoutFeedback onPress={this._handleUploadPress}>
                     <Image
-                        style={thumbnailStyle} 
+                        style={thumbnailStyle}
                         source={require('../assets/uploadImageVector.png')}
                     />
                 </TouchableWithoutFeedback>
-                <Text style={textStyle}>Upload Image</Text>         
+                <Text style={textStyle}>Upload Image</Text>
             </View>
             <View style={{ flex: 3 }}>
-                <Modal 
+                <Modal
                     isVisible={this.props.modalIsVisible}
                 >
                     <ScrollView>
@@ -91,12 +103,12 @@ class PostReviewView extends Component {
                                 <Text style={{fontSize: 25, color: 'white'}}>Choose Picture</Text>
                             </View>
                             <View style={gridStyle}>
-                                <PhotoGrid 
+                                <PhotoGrid
                                     data = { this.props.images }
                                     itemsPerRow = { 3 }
                                     itemMargin = { 1 }
                                     renderItem = {this.renderItem}
-                                />  
+                                />
                             </View>
                             <View style={ {flex:3} }>
                                 <Button
@@ -127,7 +139,8 @@ class PostReviewView extends Component {
                <View style={{ alignSelf: 'stretch' }}>
                 <InputLine
                     onChangeText={value => postReviewChange({ prop: 'caption', value })}
-                    placeholder='Caption' 
+                    placeholder='Caption'
+                    maxLength={20}
                     placeholderTextColor='gray'
                     overStyle={lineInputOverstyle}
                     value={this.props.caption}
@@ -144,15 +157,19 @@ class PostReviewView extends Component {
                 />
                 </View>
             </View>
+            {/*
             <View style={{ flex: 6 }}>
                     <Text style={messageStyle}>{this.props.message}</Text>
-                    <Text style={errorStyle}>{this.props.error}</Text> 
+                    <Text style={errorStyle}>{this.props.error}</Text>
             </View>
+          */}
             <View style={{ flex: 7 }}>
                 {this.renderFooter()}
             </View>
-       </View>   
-      </ScrollView>
+       </View>
+      </View>
+      </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     );
   }
 
@@ -168,7 +185,7 @@ renderItem( item, itemSize ) {
           <Image
               resizeMode = 'cover'
               style = {{ flex: 1 }}
-              source = {{ uri: item.src }} 
+              source = {{ uri: item.src }}
           />
         </TouchableOpacity>
     );
@@ -236,12 +253,15 @@ setSelected = (selectedImage) => {
 
 // =================================== Helper Submission Method =====================================
 onReviewSubmission () {
-    this.props.postReviewChange({ prop: 'error', value: ''})
-    this.props.postReviewChange({ prop: 'message', value: ''})
-    this.props.postReviewChange({ prop: 'loading', value: true})
-    if(this.props.selectedImage && this.props.caption && this.props.text){
+    //this.props.postReviewChange({ prop: 'error', value: ''});
+    //this.props.postReviewChange({ prop: 'message', value: ''});
+    this.props.postReviewChange({ prop: 'loading', value: true});
+    //console.log(this.props.businessName);
+    if(this.props.selectedImage.src){
+      if(this.props.caption && this.props.text && this.props.rating){
         Utils.uploadImage(this.props.selectedImage.src, `${this.props.uid+this.businessID}.jpg` )
            .then((responseData) => {
+             if(!this.props.hasReviewed){
                this.props.submitReview({
                    businessID: this.props.businessID,
                    uid: this.props.uid,
@@ -256,11 +276,60 @@ onReviewSubmission () {
                    businessName: this.props.businessName,
                });
                this.props.givePointsForReview(this.props.uid, this.props.user);
+               Alert.alert('Posted!','Your review to' + this.props.businessName + ' was posted!',
+               {text: 'OK'});
                this.props.resetPostReview();
-               this.props.postReviewChange({ prop: 'message', value: 'Review Posted Successfully'});
-           })
-    } else {
+               Actions.pop();
+               //this.props.postReviewChange({ prop: 'message', value: 'Review Posted Successfully'});
+             } else {
+               //console.log('You already reviewed')
+               Alert.alert('Error!','Your already reviewed ' + this.props.businessName,
+               {text: 'OK'});
+               //this.props.postReviewChange({ prop: 'error', value: 'You have already reviewed this business.'});
+               this.props.postReviewChange({ prop: 'loading', value: false });
+             }
+           });}
+      else{
+        //console.log('Missing inputs')
         this.props.postReviewChange({ prop: 'loading', value: false });
+        Alert.alert('Error!','Missing inputs in your review post',
+        {text: 'OK'});
+        //this.props.postReviewChange({ prop: 'error', value: 'Missing Inputs'});
+      }
+    } else if (this.props.caption && this.props.text && this.props.rating){
+      if(!this.props.hasReviewed){
+      this.props.submitReview({
+          businessID: this.props.businessID,
+          uid: this.props.uid,
+          username: this.props.username,
+          image: '',
+          rating: this.props.rating,
+          date: this.props.date,
+          caption: this.props.caption,
+          text: this.props.text,
+          tallied: this.props.tallied,
+          userIcon: this.props.userIcon,
+          businessName: this.props.businessName,
+      });
+      this.props.givePointsForReview(this.props.uid, this.props.user);
+      Alert.alert('Posted!','Your review to ' + this.props.businessName + ' was posted!',
+      {text: 'OK'});
+      this.props.resetPostReview();
+      Actions.pop();
+      //this.props.postReviewChange({ prop: 'message', value: 'Review Posted Successfully'});
+    } else {
+      //console.log('You already reviewed')
+      Alert.alert('Error!','Your already reviewed ' + this.props.businessName,
+      {text: 'OK'});
+      //this.props.postReviewChange({ prop: 'error', value: 'You have already reviewed this business.'});
+      this.props.postReviewChange({ prop: 'loading', value: false });
+    }
+    } else {
+      //console.log('Missing inputs')
+      Alert.alert('Error!','Missing inputs in your review post',
+      {text: 'OK'});
+      this.props.postReviewChange({ prop: 'loading', value: false });
+      //this.props.postReviewChange({ prop: 'error', value: 'Missing Inputs'});
     }
  }
 
@@ -305,14 +374,14 @@ const styles = {
         borderColor: '#0084b4',
         borderBottomWidth: 3,
         borderBottomColor: '#0084b4',
-        width: 330,    
+        width: 330,
     },
     inputBoxOverstyle: {
          color: '#000',
-         width: 330, 
-         backgroundColor: '#fff', 
-         height: 200, 
-         alignSelf: 'center', 
+         width: 330,
+         backgroundColor: '#fff',
+         height: 200,
+         alignSelf: 'center',
          marginTop:5,
          borderWidth: 3,
          borderColor: '#0084b4',
@@ -352,7 +421,7 @@ const styles = {
         color: '#0084b4'
     },
     errorStyle: {
-        fontSize: 18, 
+        fontSize: 18,
         color: 'red'
     }
 }
@@ -377,7 +446,7 @@ const mapStateToProps = state => {
     businessName
  } = state.postReview;
 
-  var { user } = state.userMain;
+  var { user, hasReviewed } = state.userMain;
 
  return {
     businessID,
@@ -395,7 +464,8 @@ const mapStateToProps = state => {
     message,
     businessName,
     userIcon,
-    user
+    user,
+    hasReviewed
  }
 
 }

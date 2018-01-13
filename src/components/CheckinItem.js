@@ -31,8 +31,21 @@ class CheckinItem extends Component {
       }
   }
 
+
+    renderIcon(image) {
+          if (image) {
+              return (
+                <Image style={styles.authorIconStyle} source={{uri: image }} />
+              );
+          }
+          else {
+          return ( <Image style={styles.authorIconStyle} source={require('../assets/no-user-image.gif')} />);
+          }
+          //if not, return default icon
+      }
+
     render() {
-        const { name, businessName, date, businessID } = this.props.checkin;
+        const { name, businessName, date, businessID, image } = this.props.checkin;
         return (
           <View>
               <Card>
@@ -42,7 +55,10 @@ class CheckinItem extends Component {
                       </View>
                       <View style={{ flex: 4, flexDirection: 'row', backgroundColor: '#fff', paddingTop: 5, paddingBottom: 5 }}>
                         <View style={{ justifyContent: 'center', alignItems: 'center', paddingLeft: 5, flex: 1 }}>
+                        {/*
                         <Icon name='md-home' size= {40} color='#0084b4' style={{ alignSelf: 'center' }} />
+                        */}
+                        {this.renderIcon(image)}
                         </View>
                         <View style={{ flexDirection: 'column' ,justifyContent: 'center', alignItems: 'center', paddingLeft: 5, flex: 6 }}>
                             <Text style={{
@@ -70,5 +86,16 @@ class CheckinItem extends Component {
         );
     }
 }
+
+const styles = {
+    authorIconStyle: {
+        height: 40,
+        width: 40,
+        borderWidth: 1,
+        borderRadius: 20,
+        borderColor: '#ababab',
+        resizeMode: 'contain'
+    }
+  }
 
 export default connect(null,{businessMainUpdate, businessExists})(CheckinItem);

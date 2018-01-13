@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity, LayoutAnimation, TouchableWithoutF
 import StarRating from 'react-native-star-rating';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button } from './common';
-import { businessProfileUpdate, businessMainUpdate, deactivateCoupon, deletePost } from '../actions';
+import { businessProfileUpdate, businessMainUpdate, deactivateCoupon, deletePost, viewImageBusiness } from '../actions';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import PhotoGrid from 'react-native-photo-grid';
@@ -41,7 +41,7 @@ class BusinessProfile extends Component {
 
   renderEditItemModal(){
       if(this.props.itemToEditType === 'Coupon'){
-    return( <Modal transparent={true} animationType={'slide'} visible={this.props.edit} style={{ justifyContent: 'flex-end', margin: 0 }}>
+    return( <Modal transparent={true} animationType={'slide'} onRequestClose={()=>{}} visible={this.props.edit} style={{ justifyContent: 'flex-end', margin: 0 }}>
         <View style={{ flex: 1, flexDirection: 'column', alignSelf: 'stretch' }}>
           <TouchableWithoutFeedback onPress={() => {this.toggleEditCoupon()}}>
           <View style={{flex:9}}></View>
@@ -277,10 +277,32 @@ renderProfileButtons(){
     </View>
   );
   }
+
+  toggleViewImage(){
+    this.props.businessMainUpdate({prop: 'viewImage', value: false});
+  }
+
+
+  renderViewImageModal(){
+    return (
+      <Modal transparent={true} animationType={'slide'} visible={this.props.viewImage} style={{ justifyContent: 'flex-end', margin: 0 }}>
+        <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#000' }}>
+        <TouchableWithoutFeedback onPress={() => {this.toggleViewImage();}}>
+          <Icon name='md-close' size= {25} color='#0084b4' style={{ alignSelf: 'flex-start' ,paddingTop: 15, paddingLeft: 10 }} />
+        </TouchableWithoutFeedback>
+        <Image
+        style={styles.viewImageStyle}
+        source={{uri: this.props.imageToView }}
+        />
+        </View>
+      </Modal> );
+  }
+
   render() {
     const { user, coupon_count, checkin_count, scene, businessProfileState } = this.props;
     return (
       <View style={styles.backgroundStyle}>
+        {this.renderViewImageModal()}
         {this.renderProfileModal()}
         {this.renderEditItemModal()}
         <View style={{ flex:4, backgroundColor:'#fff' }}>
@@ -363,12 +385,17 @@ borderWidth: 1,
 borderColor: 'black',
 alignSelf: 'center',
 resizeMode: 'contain'
+},
+viewImageStyle: {
+flex: 1,
+resizeMode: 'contain'
 }
 }
+
 const mapStateToProps = state => {
   const { user, uid, metrics, scene, coupon_count, checkin_count, businessProfileState,
-  photos, photoSelectedKey, showPhotosProfile, photoSelected, edit, itemToEdit, itemToEditType, itemToEditStatus } = state.businessMain;
+  photos, photoSelectedKey, showPhotosProfile, photoSelected, edit, itemToEdit, itemToEditType, itemToEditStatus, viewImage, imageToView } = state.businessMain;
   return { user, uid, metrics, scene, coupon_count, checkin_count, businessProfileState,
-    photos, photoSelectedKey, showPhotosProfile, photoSelected, edit, itemToEdit, itemToEditType, itemToEditStatus };
+    photos, photoSelectedKey, showPhotosProfile, photoSelected, edit, itemToEdit, itemToEditType, itemToEditStatus, viewImage, imageToView };
 };
-export default connect(mapStateToProps,{ businessProfileUpdate, businessMainUpdate, deactivateCoupon, deletePost })(BusinessProfile);
+export default connect(mapStateToProps,{ businessProfileUpdate, businessMainUpdate, deactivateCoupon, deletePost, viewImageBusiness })(BusinessProfile);

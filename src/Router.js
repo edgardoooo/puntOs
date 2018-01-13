@@ -286,6 +286,8 @@ const RouterComponent = () => {
           navigationBarStyle={{ backgroundColor: '#0084b4', borderBottomColor: 'gray'}}
           navBarButtonColor='white'
           component={PostReviewView}
+          onBack={() => Actions.pop()}
+          title="Post Review"
         />
         <Scene
           key="UserBusinessProfile"

@@ -20,8 +20,60 @@ class UserPromoList extends Component {
     );
   }
 
-  toggleButtonHighlight() {
+  renderPrimarySelectedStyle(filter){
+    if(pri_filter === filter){
+      return ({
+      justifyContent: 'center',
+      borderRadius: 50,
+      backgroundColor: '#0084b4',
+      flexDirection: 'column',
+      borderColor: '#0084b4',
+      borderWidth: 0.5,
+      marginRight: 5,
+      height: 40,
+      width: 40
+    });
+  } else {
+    return ({
+    justifyContent: 'center',
+    borderRadius: 50,
+    backgroundColor: '#fff',
+    flexDirection: 'column',
+    borderColor: '#0084b4',
+    borderWidth: 0.5,
+    marginRight: 5,
+    height: 40,
+    width: 40
+  });
+  }
+  }
 
+  renderSecondarySelectedStyle(filter){
+    if(sec_filter === filter){
+      return ({
+      justifyContent: 'center',
+      borderRadius: 50,
+      backgroundColor: '#0084b4',
+      flexDirection: 'column',
+      borderColor: '#0084b4',
+      borderWidth: 0.5,
+      marginRight: 5,
+      height: 40,
+      width: 40
+    });
+  } else {
+    return ({
+    justifyContent: 'center',
+    borderRadius: 50,
+    backgroundColor: '#fff',
+    flexDirection: 'column',
+    borderColor: '#0084b4',
+    borderWidth: 0.5,
+    marginRight: 5,
+    height: 40,
+    width: 40
+  });
+  }
   }
 
   filter(pf, sf) {
@@ -36,10 +88,16 @@ class UserPromoList extends Component {
     const { filterStyle, filterContainer } = styles;
     const { userPrimaryFilterState, userSecondaryFilterState, pfilter, sfilter } = this.props;
     return (
-      <View style={{ flexDirection: 'row', backgroundColor: '#0084b4', borderColor: '#fff', borderTopWidth: 0.5, height: 60, paddingLeft: 5, paddingRight: 5 }}>
+      <View style={{ flexDirection: 'row', backgroundColor: '#f0eeee', borderTopColor: '#fff', borderBottomColor: '#e3e3e3',
+      borderTopWidth: 0.5, borderBottomWidth: 0.5, height: 60, paddingLeft: 5, paddingRight: 5,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 2,
+      elevation: 2}}>
         <View style={{ flexDirection: 'row', flex: 3, alignSelf: 'stretch' }}>
           <View style={filterContainer}>
-            <View style={filterStyle}>
+            <View style={this.renderPrimarySelectedStyle('Promos')}>
               <TouchableOpacity onPress={() => {
                 //this.props.userPrimaryFilterUpdate({prop:'primaryFilterSelected', value: 'Promos'});
                 //this.props.pfilter='Promos';
@@ -47,12 +105,12 @@ class UserPromoList extends Component {
                 //console.log("changed pfilter to: " + this.props.userPrimaryFilterState.primaryFilterSelected);
                 this.filter(pri_filter, sec_filter);
                 }}>
-                <Icon name='ios-megaphone' size= {25} color='#0084b4' style={{ alignSelf: 'center' }} />
+                <Icon name='ios-megaphone' size= {25} color={pri_filter === 'Promos' ? 'white' : '#0084b4'} style={{ alignSelf: 'center' }} />
               </TouchableOpacity>
             </View>
           </View>
           <View style={filterContainer}>
-            <View style={filterStyle}>
+            <View style={this.renderPrimarySelectedStyle('Coupons')}>
               <TouchableOpacity onPress={() => {
                 //this.props.userPrimaryFilterUpdate({prop:'primaryFilterSelected', value: 'Coupons'});
                 //this.props.pfilter='Coupons';
@@ -61,85 +119,88 @@ class UserPromoList extends Component {
                 //console.log("changed pfilter to: " + this.props.userPrimaryFilterState.primaryFilterSelected);
                 this.filter(pri_filter, sec_filter);
                 }}>
-                <Icon name='ios-pricetag' size= {25} color='#0084b4' style={{ alignSelf: 'center' }} />
+                <Icon name='ios-pricetag' size= {25} color={pri_filter === 'Coupons' ? 'white' : '#0084b4'} style={{ alignSelf: 'center' }} />
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ height: 40, width: 0.5, backgroundColor: '#fff', marginRight: 5, alignSelf: 'center'}}></View>
+          <View style={{ height: 40, width: 0.5, backgroundColor: '#0084b4', marginRight: 5, alignSelf: 'center'}}></View>
         </View>
 
         <View style={{ flex: 8 }}>
             <ScrollView horizontal showVerticalScrollIndicator={false} contentContainerstyle={styles.carouselStyle}>
               <View style={filterContainer}>
-                <View style={filterStyle}>
+                <View style={this.renderSecondarySelectedStyle('All')}>
                   <TouchableOpacity onPress={() => {
                     //this.props.userSecondaryFilterUpdate({prop:'secondaryFilterSelected', value: 'All'});
                     sec_filter = 'All';
                     this.filter(pri_filter, sec_filter);
                 }}>
-                    <Icon name='ios-apps' size= {25} color='#0084b4' style={{ alignSelf: 'center' }} />
+                    <Icon name='ios-apps' size= {25} color={sec_filter === 'All' ? 'white' : '#0084b4'} style={{ alignSelf: 'center' }} />
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={filterContainer}>
-                <View style={filterStyle}>
+                <View style={this.renderSecondarySelectedStyle('Favorites')}>
                   <TouchableOpacity onPress={() => {
                     //this.props.userSecondaryFilterUpdate({prop:'secondaryFilterSelected', value: 'Favorites'});
                     sec_filter = 'Favorites';
                     this.filter(pri_filter, sec_filter);
                   }}>
-                    <Icon name='md-star' size= {25} color='#0084b4' style={{ alignSelf: 'center' }} />
+                    <Icon name='md-star' size= {25} color={sec_filter === 'Favorites' ? 'white' : '#0084b4'} style={{ alignSelf: 'center' }} />
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={filterContainer}>
-                <View style={filterStyle}>
+                <View style={this.renderSecondarySelectedStyle('Location')}>
                   <TouchableOpacity onPress={() => {
                     //this.props.userSecondaryFilterUpdate({prop:'secondaryFilterSelected', value: 'Location'});
                     sec_filter = 'Location';
                     this.filter(pri_filter, sec_filter);
                   }}>
-                    <Icon name='md-pin' size= {25} color='#0084b4' style={{ alignSelf: 'center' }} />
+                    <Icon name='md-pin' size= {25} color={sec_filter === 'Location' ? 'white' : '#0084b4'} style={{ alignSelf: 'center' }} />
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={filterContainer}>
-                <View style={filterStyle}>
+                <View style={this.renderSecondarySelectedStyle('Cafe')}>
                   <TouchableOpacity onPress={() => {
                     //this.props.userSecondaryFilterUpdate({prop:'secondaryFilterSelected', value: 'Cafe'});
                     sec_filter = 'Cafe';
                     this.filter(pri_filter, sec_filter);
                   }}>
-                    <Icon name='md-cafe' size= {25} color='#0084b4' style={{ alignSelf: 'center' }} />
+                    <Icon name='md-cafe' size= {25} color={sec_filter === 'Cafe' ? 'white' : '#0084b4'} style={{ alignSelf: 'center' }} />
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={filterContainer}>
-                <View style={filterStyle}>
+                <View style={this.renderSecondarySelectedStyle('Bar')}>
                   <TouchableOpacity onPress={() => {
                     //this.props.userSecondaryFilterUpdate({prop:'secondaryFilterSelected', value: 'Bar'});
                     sec_filter = 'Bar';
                     this.filter(pri_filter, sec_filter);
                   }}>
-                    <Icon name='md-beer' size= {25} color='#0084b4' style={{ alignSelf: 'center' }} />
+                    <Icon name='md-beer' size= {25} color={sec_filter === 'Bar' ? 'white' : '#0084b4'} style={{ alignSelf: 'center' }} />
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={filterContainer}>
-                <View style={filterStyle}>
+                <View style={this.renderSecondarySelectedStyle('Restaurant')}>
                   <TouchableOpacity onPress={() => {
                     //this.props.userSecondaryFilterUpdate({prop:'secondaryFilterSelected', value: 'Restaurant'});
                     sec_filter = 'Restaurant';
                     this.filter(pri_filter, sec_filter);
                   }}>
-                    <Icon name='md-restaurant' size= {25} color='#0084b4' style={{ alignSelf: 'center' }} />
+                    <Icon name='md-restaurant' size= {25} color={sec_filter === 'Restaurant' ? 'white' : '#0084b4'} style={{ alignSelf: 'center' }} />
                   </TouchableOpacity>
                 </View>
               </View>
               <View style={filterContainer}>
-                <View style={filterStyle}>
-                  <TouchableOpacity onPress={() => { }}>
-                    <Icon name='md-desktop' size= {25} color='#0084b4' style={{ alignSelf: 'center' }} />
+                <View style={this.renderSecondarySelectedStyle('Entertainment')}>
+                  <TouchableOpacity onPress={() => {
+                    sec_filter = 'Entertainment';
+                    //this.filter(pri_filter, sec_filter);
+                   }}>
+                    <Icon name='md-desktop' size= {25} color={sec_filter === 'Entertainment' ? 'white' : '#0084b4'} style={{ alignSelf: 'center' }} />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -171,10 +232,10 @@ class UserPromoList extends Component {
 const styles = {
   viewStyle: {
       flexDirection: 'row',
-      backgroundColor: '#00b0f0',
+      backgroundColor: '#f0eeee',
       justifyContent: 'space-around',
       alignItems: 'center',
-      height: 30,
+      height: 30
   },
   lineSeparatorStyle: {
       backgroundColor: 'white',
@@ -186,7 +247,7 @@ const styles = {
       flexDirection: 'row',
       justifyContent: 'space-around',
       height: 50,
-      backgroundColor: '#00b0f0',
+      backgroundColor: '#f0eeee',
       alignItems: 'center',
       shadowColor: 'white',
       shadowOffset: { width: 0, height: 2 },
@@ -207,7 +268,7 @@ const styles = {
   },
   filterContainer: {
     justifyContent: 'center',
-    backgroundColor: '#0084b4',
+    backgroundColor: '#f0eeee',
     flexDirection: 'column',
     flex: 1
   },
@@ -216,6 +277,8 @@ const styles = {
     borderRadius: 50,
     backgroundColor: '#fff',
     flexDirection: 'column',
+    borderColor: '#0084b4',
+    borderWidth: 0.5,
     marginRight: 5,
     height: 40,
     width: 40

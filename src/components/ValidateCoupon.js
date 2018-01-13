@@ -4,6 +4,7 @@ import { InputLine, Button, Spinner } from './common';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { validateStateUpdate, validateCoupon } from '../actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Actions } from 'react-native-router-flux';
 
 class ValidateCoupon extends Component {
@@ -55,6 +56,12 @@ class ValidateCoupon extends Component {
   render() {
     const { user, validateState } = this.props;
     return (
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#ecedee', flex: 1 }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.backgroundStyle}
+      scrollEnabled={true}
+      >
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.backgroundStyle}>
         <View style={{ flex: 5, justifyContent: 'center'}}>
@@ -73,7 +80,7 @@ class ValidateCoupon extends Component {
         <View style={{ flex: 4, justifyContent: 'center'}}>
         <InputLine
           onChangeText={value => this.props.validateStateUpdate({ prop: 'code', value })}
-          placeholder='A04F765GH'
+          placeholder='a04f765h'
           placeholderTextColor='gray'
           selectionColor='#0084b4'
           overStyle={{ borderBottomColor: '#0084b4', color: '#0084b4', textAlign: 'center' }}
@@ -85,6 +92,7 @@ class ValidateCoupon extends Component {
         </View>
       </View>
       </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     );
   }
 }

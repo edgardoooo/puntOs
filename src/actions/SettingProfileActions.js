@@ -49,8 +49,9 @@ export const getProfile = (uid) => {
               }
             );
           } else{
+            const userObj = {...user, uid: uid };
           dispatch({ type: BUSINESS_MAIN_UPDATE, payload: { prop: 'uid', value: uid }});
-          //dispatch({ type: BUSINESS_MAIN_UPDATE, payload: { prop: 'user', value: user }});
+          dispatch({ type: BUSINESS_MAIN_UPDATE, payload: { prop: 'user', value: userObj}});
           Actions.BusinessMain();
         }
         }

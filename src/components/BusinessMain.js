@@ -6,7 +6,7 @@ import StarRating from 'react-native-star-rating';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { unlinkAccount, businessMainUpdate, getBusinessProfile, getCheckinsToday,
-  getCouponsToday, updateProfilePic, logoutUser, resetLocation } from '../actions';
+  getCouponsToday, updateProfilePic, logoutUser, resetLocation, getMetrics } from '../actions';
 import { Actions } from 'react-native-router-flux';
 
 import BusinessDashboard from './BusinessDashboard';
@@ -24,6 +24,7 @@ class BusinessMain extends Component {
       this.props.getBusinessProfile(this.props.uid);
       this.props.getCheckinsToday(this.props.uid);
       this.props.getCouponsToday(this.props.uid);
+      this.props.getMetrics(this.props.uid);
     }
 
   setSelected(key){
@@ -164,7 +165,7 @@ toggleSettings(){
 
 renderSettings(){
   return (
-    <Modal transparent={true} animationType={'slide'} visible={this.props.settings} style={{ justifyContent: 'flex-end', margin: 0 }}>
+    <Modal transparent={true} onRequestClose={()=>{}} animationType={'slide'} visible={this.props.settings} style={{ justifyContent: 'flex-end', margin: 0 }}>
       <View style={{ flex: 1, flexDirection: 'column', alignSelf: 'stretch' }}>
         <TouchableWithoutFeedback onPress={() => {this.toggleSettings()}}>
         <View style={{flex:7}}></View>
@@ -196,7 +197,7 @@ renderSettings(){
 
   renderPhotosModal(){
     return (
-      <Modal transparent={false} animationType={'slide'} visible={this.props.showPhotos}>
+      <Modal transparent={false} onRequestClose={()=>{}} animationType={'slide'} visible={this.props.showPhotos}>
         <View style={{ flex:1, paddingTop: 20, flexDirection: 'column', alignItems: 'center' }}>
           <Text style={{fontSize: 20, color: '#000', paddingBottom:10}}>Camera Roll</Text>
           <ScrollView style={{flexWrap: 'wrap', flexDirection: 'row'}}>
@@ -283,7 +284,7 @@ renderSettings(){
   }
   else {
     return (
-      <TouchableWithoutFeedback onPress={() => { this.props.businessMainUpdate({ prop: 'scene', value: 'metrics'})}}>
+      <TouchableWithoutFeedback onPress={() => { this.props.businessMainUpdate({ prop: 'scene', value: 'metrics'});}}>
       <Icon name='ios-stats-outline' size= {30} color='grey' style={{ alignSelf: 'center' }} />
       </TouchableWithoutFeedback>
   );
@@ -480,4 +481,4 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps,{unlinkAccount, businessMainUpdate, getBusinessProfile, getCheckinsToday,
-  getCouponsToday, updateProfilePic, logoutUser, resetLocation})(BusinessMain);
+  getCouponsToday, updateProfilePic, logoutUser, resetLocation, getMetrics})(BusinessMain);

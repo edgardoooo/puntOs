@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { likeItem, unlikeItem, setExpired, editItem, setCouponProfile, shareItem, userMainUpdate } from '../actions';
+import { likeItem, unlikeItem, setExpired, editItem, setCouponProfile, shareItem,
+  userMainUpdate, viewImageBusiness, viewImage } from '../actions';
 import { Card, CardSection, Button } from './common';
 import { Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import firebase from 'firebase';
 var moment = require('moment');
 
 class PostItem extends Component {
@@ -22,13 +24,32 @@ class PostItem extends Component {
         }
         //if not, return default icon
     }
-
-  renderImage(image) {
-        if (image) {
-            return (
-                <Image style={styles.postImageStyle} source={{uri: image }} />
-            );
-        }
+    renderImage(image){
+      const current_user = firebase.auth().currentUser.uid;
+      if(this.props.user){
+      if(current_user===this.props.user.uid){
+        console.log('business side')
+        if(image){
+        return (
+          <TouchableWithoutFeedback onPress={ () => {
+            this.props.viewImageBusiness(image);
+          }}>
+            <Image style={styles.postImageStyle} source={{uri: image }} />
+          </TouchableWithoutFeedback>
+        );}
+      }}
+      if(this.props.uid){
+      if (current_user===this.props.uid){
+        if(image){
+        return (
+          <TouchableWithoutFeedback onPress={ () => {
+            this.props.viewImage(image);
+          }}>
+            <Image style={styles.postImageStyle} source={{uri: image }} />
+          </TouchableWithoutFeedback>
+        );}
+    }
+    }
     }
 
     getLikes(likedBy, uid, pid, isCoupon) {
@@ -95,6 +116,7 @@ class PostItem extends Component {
       }
     }
   }
+
 
     renderClaimButton(isCoupon, expired, expires, pointsValue, pid, uid) {
         if(isCoupon){
@@ -188,6 +210,19 @@ class PostItem extends Component {
         return false;
     }
 
+    renderOptionsButton(){
+      const current_user = firebase.auth().currentUser.uid;
+      if(this.props.user)
+      if(current_user===this.props.user.uid){
+        return <Icon name='ellipsis-v' size= {20} color='grey' style={{ paddingRight: 10, paddingTop: 10 }} />;
+      }
+      if(this.props.uid){
+      if (current_user===this.props.uid){
+      return <View></View>;
+    }
+    }
+    }
+
     renderDate(date) {
       const post_date = moment(new Date(date));
       const _today = moment(new Date());
@@ -231,7 +266,7 @@ class PostItem extends Component {
                             </Text>
                         </View>
                     <TouchableWithoutFeedback onPress={() => {this.props.editItem(pid, isCoupon, expired)}}>
-                      { this.props.userType ? <View></View> :<Icon name='ellipsis-v' size= {20} color='grey' style={{ paddingRight: 10, paddingTop: 10 }} />}
+                      {this.renderOptionsButton()}
                     </TouchableWithoutFeedback>
                     </View>
                 </CardSection>
@@ -310,17 +345,12 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-  var { type } = state.businessMain;
+  var { user, viewImage, imageToView } = state.businessMain;
   var { uid } = state.userMain;
   var userType = "user";
 
-  //Check if user authenticated is of type user or business
-  if(uid === ''){
-      uid = state.businessMain.uid;
-      userType = "";
-  }
-
-  return { uid, type, userType };
+  return { uid, userType, user };
 }
 
-export default connect(mapStateToProps, { likeItem, unlikeItem, setExpired, editItem, setCouponProfile, shareItem, userMainUpdate }) (PostItem);
+export default connect(mapStateToProps, { likeItem, unlikeItem, setExpired, editItem,
+  setCouponProfile, shareItem, userMainUpdate, viewImageBusiness, viewImage }) (PostItem);

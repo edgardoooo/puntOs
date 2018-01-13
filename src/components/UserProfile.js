@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, LayoutAnimation, TouchableWithoutFeedback, Tabbar, ScrollView, CameraRoll, Alert, Modal, TouchableHighlight } from 'react-native';
+import { View, Text, Image, TouchableOpacity, LayoutAnimation, TouchableWithoutFeedback, Tabbar,
+  ScrollView, CameraRoll, Alert, Modal, TouchableHighlight } from 'react-native';
 import StarRating from 'react-native-star-rating';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { userProfileUpdate, getUserProfile, getCheckins, updateUserProfilePic, userMainUpdate, getFollowing } from '../actions';
+import { userProfileUpdate, getUserProfile, getCheckins,
+  updateUserProfilePic, userMainUpdate, getFollowing, getMyCheckins, viewImage } from '../actions';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
@@ -22,7 +24,8 @@ class UserProfile extends Component {
 
   componentWillMount() {
     currentUser = firebase.auth().currentUser.uid;
-    this.props.getCheckins(currentUser);
+    //this.props.getCheckins(currentUser);
+    this.props.getMyCheckins(currentUser);
     this.props.getUserProfile(currentUser);
     this.props.getFollowing(currentUser);
   }
@@ -175,6 +178,25 @@ class UserProfile extends Component {
     );
   }
 
+  toggleViewImage(){
+    this.props.userMainUpdate({prop: 'viewImage', value: false});
+  }
+
+  renderViewImageModal(){
+    return (
+      <Modal transparent={true} animationType={'slide'} visible={this.props.viewImage} style={{ justifyContent: 'flex-end', margin: 0 }}>
+        <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#000' }}>
+        <TouchableWithoutFeedback onPress={() => {this.toggleViewImage();}}>
+          <Icon name='md-close' size= {25} color='#0084b4' style={{ alignSelf: 'flex-start' ,paddingTop: 15, paddingLeft: 10 }} />
+        </TouchableWithoutFeedback>
+        <Image
+        style={styles.viewImageStyle}
+        source={{uri: this.props.imageToView }}
+        />
+        </View>
+      </Modal> );
+  }
+
   renderPhotosModal(){
     return (
       <Modal transparent={false} animationType={'slide'} visible={this.props.showPhotos} onRequestClose={ () => {}}>
@@ -288,10 +310,17 @@ borderWidth: 1,
 borderColor: 'black',
 alignSelf: 'center',
 resizeMode: 'contain'
+},
+viewImageStyle: {
+flex: 1,
+resizeMode: 'contain'
 }
 }
 const mapStateToProps = state => {
-  const { user, name, uid, points, level, checkins, userProfileState, photos, photoSelected, photoSelectedKey, showPhotos, uploadLoading, uploadError, following } = state.userMain;
-  return { user, name, uid, points, level, checkins, userProfileState, photos, photoSelected, photoSelectedKey, showPhotos, uploadLoading, uploadError, following };
+  const { user, name, uid, points, level, checkins, userProfileState, photos, photoSelected,
+    photoSelectedKey, showPhotos, uploadLoading, uploadError, following, imageToView, viewImage } = state.userMain;
+  return { user, name, uid, points, level, checkins, userProfileState, photos, photoSelected,
+    photoSelectedKey, showPhotos, uploadLoading, uploadError, following, imageToView, viewImage };
 };
-export default connect(mapStateToProps,{ userProfileUpdate, getUserProfile, getCheckins, updateUserProfilePic, userMainUpdate, getFollowing })(UserProfile);
+export default connect(mapStateToProps,{ userProfileUpdate, getUserProfile, getCheckins,
+  updateUserProfilePic, userMainUpdate, getFollowing, getMyCheckins, viewImage })(UserProfile);
