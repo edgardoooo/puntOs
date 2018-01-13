@@ -1,13 +1,28 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import { connect } from 'react-redux';
+import firebase from 'firebase';
+import { userMainUpdate, getUserProfile } from '../actions';
+import UserNotificationList from './UserNotificationList';
 
-class NotificationsView extends Component {
+class UserNotificationView extends Component {
+  componentWillMount(){
+    currentUser = firebase.auth().currentUser.uid;
+    this.props.getUserProfile(currentUser);
+  }
+
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <Text>Notifications View</Text>
+      <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
+        <UserNotificationList />
       </View>
     );
   }
 }
-export default NotificationsView;
+
+const mapStateToProps = state => {
+  const { user, uid } = state.userMain;
+  return { user, uid };
+};
+
+export default connect(mapStateToProps, { getUserProfile })(UserNotificationView);

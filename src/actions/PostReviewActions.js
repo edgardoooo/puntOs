@@ -16,6 +16,7 @@ export const postReviewChange = ({ prop, value }) =>{
 
 export const submitReview = (props) => {
     return (dispatch) => {
+        console.log(props)
         dispatch({ type: POST_REVIEW_CHANGE, payload: { prop:'loading', value: true }});
         const today = new Date();
         const date = today.toISOString();
@@ -24,8 +25,16 @@ export const submitReview = (props) => {
         firebase.database().ref(`/Reviews/`)
             .push(props)
                 .then((response) => {
+                  const event_obj = {businessName: props.businessName, date: date,
+                    eventType: 'review', rating: props.rating, username: props.username};
+                  firebase.database().ref(`/Events/`).push(event_obj).then(()=>{
                     dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'loading', value: false} });
                     dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'error', value: ''}});
+                  }).catch((error)=>{
+                    console.log(error);
+                    dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'error', value: 'error'}});
+                    dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'loading', value: false} });
+                  });
                 })
                 .catch((error) => {
                     dispatch({ type: POST_REVIEW_CHANGE, payload: { prop: 'error', value: error}});
@@ -59,8 +68,3 @@ export const givePointsForReview = (uid, user) => {
         });
     };
 }
-
-
-
-
-

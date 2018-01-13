@@ -6,13 +6,13 @@ RESET_POST_REVIEW
 
 
 const INITIAL_STATE = {
-    businessID: 'za47V9Z8DqVPampPGTa0of0Aojy1',
+    businessID: '',
     date: '',
     text: '',
     rating: 0,
     caption: '',
-    uid: 'zttXtdJ4KMT7eor77y0CFDQGLpO2',
-    username: 'Jariel Laureano',
+    uid: '',
+    username: '',
     images: [],
     loading: false,
     error: '',
@@ -33,6 +33,6 @@ export default ( state=INITIAL_STATE, action ) => {
         case RESET_POST_REVIEW:
             return INITIAL_STATE;
         default:
-        return state;
+            return state;
     }
 };

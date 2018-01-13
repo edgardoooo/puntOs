@@ -9,7 +9,8 @@ import {
   LEADERBOARD_UPDATE,
   GET_FOLLOWING,
   USER_PRIMARY_FILTER_UPDATE,
-  USER_SECONDARY_FILTER_UPDATE} from '../actions/types';
+  USER_SECONDARY_FILTER_UPDATE,
+  USER_MAIN_RESET} from '../actions/types';
 
 const INITIAL_STATE = {
     name: '',
@@ -23,6 +24,7 @@ const INITIAL_STATE = {
     user: {},
     type: 'user',
     uid:'',
+    userImage: '',
     cameraActive: true,
     checkin: false,
     hasCheckedIn: false,
@@ -66,7 +68,10 @@ const INITIAL_STATE = {
     rank: 0,
     promoCode: '',
     promoLoading: '',
-    hasReviewed: false
+    hasReviewed: false,
+    viewImage: false,
+    imageToView: '',
+    notificationList: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -132,6 +137,10 @@ export default (state = INITIAL_STATE, action) => {
       const new_following = action.payload;
       console.log('In follow reducer: ' + new_following);
       return { ...state, following: new_following };
+    }
+    case USER_MAIN_RESET:
+    {
+      return INITIAL_STATE;
     }
     default:
       return state;

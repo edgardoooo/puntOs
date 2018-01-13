@@ -91,7 +91,11 @@ export const getBusinessProfile = (uid) => {
       return (dispatch) => {
       firebase.database().ref(`/users/${uid}`).on('value', snapshot => {
         const user = snapshot.val();
-        dispatch({ type: BUSINESS_MAIN_UPDATE, payload: { prop: 'user', value: user }});
+        //console.log('getBusinessProfile ' + uid)
+        //console.log(user)
+        userObj = {...user, uid: uid};
+        //console.log(userObj);
+        dispatch({ type: BUSINESS_MAIN_UPDATE, payload: { prop: 'user', value: userObj }});
       });
         };
       };
@@ -395,6 +399,13 @@ export const editItem = (pid, isCoupon, expired) => {
   };
 };
 
+export const viewImageBusiness = (image) => {
+  return (dispatch) => {
+      dispatch({type: BUSINESS_MAIN_UPDATE, payload:{prop: 'viewImage', value: true}});
+      dispatch({type: BUSINESS_MAIN_UPDATE, payload:{prop: 'imageToView', value: image }});
+  };
+};
+
 export const deactivateCoupon = (pid) => {
   return (dispatch) => {
     firebase.database().ref(`Coupons/${pid}`).once('value',snapshot=> {
@@ -478,14 +489,13 @@ export const validateCoupon = (coupon_code, uid) => {
     if(!redeemObj){
       dispatch({ type: VALIDATE_STATE_UPDATE, payload: {prop: 'loading', value: false}});
       dispatch({ type: VALIDATE_STATE_UPDATE, payload: {prop: 'error', value: 'Coupon code not found'}});
-    } else if(redeemObj.businessID === uid){
+    } else if(redeemObj.businessID !== uid){
       dispatch({ type: VALIDATE_STATE_UPDATE, payload: {prop: 'loading', value: false}});
       dispatch({ type: VALIDATE_STATE_UPDATE, payload: {prop: 'error', value: 'Coupon not from this business.'}});
     } else if(redeemObj.used){
       dispatch({ type: VALIDATE_STATE_UPDATE, payload: {prop: 'loading', value: false}});
       dispatch({ type: VALIDATE_STATE_UPDATE, payload: {prop: 'error', value: 'Coupon code already used'}});
-    }
-    else if(!redeemObj.used){
+    }else if(!redeemObj.used){
       snapshot.ref.child(redeem_id).update({ used: true}).then(() => {
       firebase.database().ref(`/Coupons/${coupon_id}`).once('value', snapshot => {
         const response = snapshot.val();
@@ -508,7 +518,7 @@ export const validateCoupon = (coupon_code, uid) => {
   });
     };
 };
-
+/*
 export const getMetrics = (uid) => {
   return (dispatch) => {
     firebase.database().ref(`/Metrics/${uid}`).on('value', snapshot => {
@@ -517,7 +527,7 @@ export const getMetrics = (uid) => {
     });
   };
 };
-
+*/
 export const unlinkAccount = (uid, linked_id) => {
   return (dispatch) => {
   const req_url = UNLINK_ACCOUNT+'?uid='+uid+'&linkedId='+linked_id;
@@ -597,4 +607,183 @@ export const resetLocation = (uid) => {
       });
     });
     };
+  };
+
+  function getAgeDistribution(ageList) {
+  var ageDistribution = {};
+  var youngAgeCount = 0;
+  var midAgeCount = 0;
+  var seniorAgeCount = 0;
+  for (age in ageList) {
+    if (ageList[age] <= 25) {
+      youngAgeCount++;
+    }
+    else if (ageList[age] >= 26 && ageList[age] <= 49) {
+      midAgeCount++;
+    }
+    else {
+      seniorAgeCount++;
+    }
+  }
+  ageDistribution = {
+    ['young']: youngAgeCount,
+    ['mid']: midAgeCount,
+    ['senior']: seniorAgeCount
+  }
+  return ageDistribution;
+}
+
+function getRegionDistribution(cityList) {
+  var regionDistribution = {};
+  var metroRegion = ['San Juan', 'Bayamon', 'Carolina', 'Trujillo Alto', 'Catano', 'Guaynabo'];
+  var northRegion = ['Camuy', 'Hatillo', 'Arecibo', 'Barceloneta', 'Manati', 'Vega Baja', 'Vega Alta', 'Dorado', 'Toa Alta'];
+  var southRegion = ['Guayanilla', 'Ponce', 'Santa Isabel', 'Salina', 'Arroyo', 'Patillas', 'Yauco', 'Penuelas', 'Villalba', 'Juana Diaz', 'Coamo', 'Guayama'];
+  var eastRegion= ['Vieques', 'Culebra', 'Loiza', 'Gurabo', 'Juncos', 'Las Piedras', 'Canovanas', 'Rio Grande', 'Luquillo', 'Fajardo', 'Ceiba', 'Humacao', 'Naguabo', 'Maunabo', 'Yabucoa'];
+  var westRegion = ['Aguadilla', 'Isabela', 'Rincon', 'Aguada', 'Moca', 'San Sebastian', 'Anasco', 'Las Marias', 'Mayaguez', 'Hormigueros', 'Maricao', 'Cabo Rojo', 'San German', 'Lajas', 'Sabana Grande'];
+  var centerRegion = ['Aibonito', 'Aguas Buena', 'Cidra', 'Comerio', 'Corozal', 'Cayey', 'Naranjito', 'Barranquitas', 'Orocovis', 'Morovis', 'Ciales', 'Adjuntas', 'Florida', 'Lares', 'Utuado'];
+  var metroRegionCount = 0;
+  var northRegionCount = 0;
+  var southRegionCount = 0;
+  var eastRegionCount = 0;
+  var westRegionCount = 0;
+  var centerRegionCount = 0;
+  var otherRegionCount = 0;
+
+  for (city in cityList) {
+    //console.log('The city: ' + cityList[city]);
+    //console.log('RegionList: ');
+    //console.log(metroRegion);
+    if (metroRegion.includes(cityList[city])) {
+      metroRegionCount++;
+    }
+    else if (northRegion.includes(cityList[city])) {
+      northRegionCount++;
+    }
+    else if (southRegion.includes(cityList[city])) {
+      southRegionCount++;
+    }
+    else if (eastRegion.includes(cityList[city])) {
+      eastRegionCount++;
+    }
+    else if (westRegion.includes(cityList[city])) {
+      westRegionCount++;
+    }
+    else if (centerRegion.includes(cityList[city])) {
+      centerRegionCount++;
+    }
+    else {
+      otherRegionCount++;
+    }
+  }
+  regionDistribution = {
+    ['metroRegion']: metroRegionCount,
+    ['northRegion']: northRegionCount,
+    ['southRegion']: southRegionCount,
+    ['eastRegion']: eastRegionCount,
+    ['westRegion']: westRegionCount,
+    ['centerRegion']: centerRegionCount,
+    ['otherRegion']: otherRegionCount,
+  }
+  return regionDistribution;
+}
+
+function getTimeDistribution(timeList) {
+  var timeDistribution = {};
+  var morningCount = 0; //This is the time from midnight to midday.
+  var afternoonCount = 0; //From 12:00 hours to approximately 18:00 hours.
+  var eveningCount = 0; //From approximately 18:00 hours to 00:00 hours.
+  for (time in timeList) {
+    let hour = timeList[time].substring(11,13);
+    console.log(hour)
+    hour = parseInt(hour);
+    console.log('The hour: ' + hour);
+
+    if (hour >= 0 && hour < 10) {
+      morningCount++;
+    }
+    else if (hour >= 12 && hour < 18) {
+      afternoonCount++;
+    }
+    else if (hour >= 18 && hour <= 23) {
+      eveningCount++;
+    }
+  }
+  timeDistribution = {
+    ['morning']: morningCount,
+    ['afternoon']:afternoonCount,
+    ['evening']: eveningCount
+  }
+  return timeDistribution;
+}
+
+  export const getMetrics = (bid) => {
+  return (dispatch) => {
+  console.log('Getting business metrics for: ' + bid);
+    var metricsObject = {};
+    var ci_ageList = [];
+    var ci_cityList = [];
+    var ci_timeList = [];
+    var s_ageList = [];
+    var s_cityList = [];
+    var r_ageList = [];
+    var r_cityList = [];
+    firebase.database().ref(`/Events`).orderByChild('businessID').equalTo(bid).on('value', snapshot => {
+      snapshot.forEach(child_node => {
+        let currentEventItem = child_node.val();
+        if(currentEventItem.eventType == 'sharePromo' || currentEventItem.eventType == 'shareCoupon') {
+          if(currentEventItem.businessID == bid) {
+            s_ageList.push(currentEventItem.age);
+            s_cityList.push(currentEventItem.city);
+          }
+        }
+        else if (currentEventItem.eventType == 'redeem') {
+          if(currentEventItem.businessID == bid) {
+            r_ageList.push(currentEventItem.age);
+            r_cityList.push(currentEventItem.city);
+          }
+        }
+        else if (currentEventItem.eventType == 'checkIn') {
+          if(currentEventItem.businessID == bid) {
+            ci_ageList.push(currentEventItem.age);
+            ci_cityList.push(currentEventItem.city);
+            ci_timeList.push(currentEventItem.date);
+          }
+        }
+      });
+      console.log('Checkin ages:');
+      console.log(ci_ageList);
+      console.log('Checkin cities:');
+      console.log(ci_cityList);
+      console.log('Checkin times:');
+      console.log(ci_timeList);
+      console.log('Share ages:');
+      console.log(s_ageList);
+      console.log('Share cities:');
+      console.log(s_cityList);
+      console.log('Redeem ages:');
+      console.log(r_ageList);
+      console.log('Redeem cities:');
+      console.log(r_cityList);
+
+      //PERFORM ANALYTICS AND STORE IN METRICS OBJECT
+      metricsObject = {
+        ['checkinAgeDist']: getAgeDistribution(ci_ageList),
+        ['checkinRegionDist']: getRegionDistribution(ci_cityList),
+        ['checkinTimeDist']: getTimeDistribution(ci_timeList),
+        ['shareAgeDist']: getAgeDistribution(s_ageList),
+        ['shareRegionDist']: getRegionDistribution(s_cityList),
+        ['redeemAgeDist']: getAgeDistribution(r_ageList),
+        ['redeemRegionDist']: getRegionDistribution(r_cityList)
+      }
+
+      //CONFIRM METRICS OBJECT IS OK
+      console.log('The metrics object before dispatching...');
+      console.log(metricsObject);
+      console.log('dispatching')
+      dispatch({type: BUSINESS_METRICS_UPDATE, payload: metricsObject});
+    });
+
+    //DISPATCH THE METRICS OBJECT
+    };
+
   };

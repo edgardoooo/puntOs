@@ -28,7 +28,7 @@ const mapStateToProps = state => {
   //console.log('Following Display list: ' + state.userMain.following)
   const following = _.map(state.userMain.following, (val, key) => {
     return {...val, key};
-  });
+  }); 
   return { user, following };
 }
 

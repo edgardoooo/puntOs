@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import React, { Component, PureComponent } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { userLikeItem, userUnlikeItem, userSetExpired, businessMainUpdate,
-  setCouponProfile, shareItemUser, businessExists } from '../actions';
+  setCouponProfile, shareItemUser, businessExists, viewImage } from '../actions';
 import { Card, CardSection, Button } from './common';
 import { Actions } from 'react-native-router-flux';
 var moment = require('moment');
@@ -27,7 +27,11 @@ class UserPromoItem extends PureComponent {
       renderImage(image) {
             if (image) {
                 return (
+                  <TouchableWithoutFeedback onPress={ () => {
+                    this.props.viewImage(image);
+                  }}>
                     <Image style={styles.postImageStyle} source={{uri: image }} />
+                  </TouchableWithoutFeedback>
                 );
             }
         }
@@ -164,7 +168,8 @@ class UserPromoItem extends PureComponent {
         }
         return (
             <Icon.Button name="share" color="black" backgroundColor="white"
-            onPress={() => this.props.shareItemUser(uid, pid, isCoupon, this.props.item.image, this.props.item.text, businessID, businessName, this.props.user.name)}
+            onPress={() => this.props.shareItemUser(uid, pid, isCoupon, this.props.item.image, this.props.item.text,
+              businessID, businessName, this.props.user.name, this.props.user.birthdate, this.props.user.hometown)}
             >
                 <Text style={styles.postFooterButtonTextStyle}>{this.renderShares(sharedBy)}</Text>
             </Icon.Button>
@@ -221,6 +226,7 @@ class UserPromoItem extends PureComponent {
                         <View style={{flex:1, flexDirection: 'column'}}>
                         <TouchableOpacity onPress={ () => {
                           this.props.businessMainUpdate({ prop: 'uid', value: businessID});
+                          this.props.businessMainUpdate({ prop: 'businessName', value: name});
                           this.props.businessExists(businessID);
                         }}>
                             <Text style={authorNameStyle}>
@@ -311,4 +317,4 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps,{ userLikeItem, userUnlikeItem,
-  userSetExpired, businessMainUpdate, setCouponProfile, shareItemUser, businessExists })(UserPromoItem);
+  userSetExpired, businessMainUpdate, setCouponProfile, shareItemUser, businessExists, viewImage })(UserPromoItem);

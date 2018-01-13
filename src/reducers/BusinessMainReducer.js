@@ -41,6 +41,8 @@ createCouponState: { loading: false, error: '', coupon_text: '', coupon_media: '
 claim_limit: 10, coupon_title: '', expiration_max: 59, expiration_step: 10 },
 businessProfileState: { tab_selected: 'Promos' },
 isCouponClaim: false,
+viewImage: false,
+imageToView: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -92,10 +94,12 @@ export default (state = INITIAL_STATE, action) => {
     }
     case BUSINESS_METRICS_UPDATE:
     {
+    console.log('At business metrics reducer...');
     console.log(action.payload);
     //const new_metrics = {...state.metrics, ...action.payload};
     //console.log({ ...state, metrics: new_metrics })
-    return { ...state, [action.payload.prop]: action.payload.value };;
+    //console.log( { ...state, [action.payload.prop]: action.payload.value } )
+    return { ...state, metrics: action.payload };
     }
     default:
       return state;

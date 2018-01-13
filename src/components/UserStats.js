@@ -53,6 +53,7 @@ renderLevelProgress(overallPoints){
 
 renderLatestCheckins(lastCheckins){
   if(lastCheckins){
+    console.log(checkinItems)
     var checkinItems = _.map(lastCheckins, (val,key) => {
     //console.log(val)
     return  (

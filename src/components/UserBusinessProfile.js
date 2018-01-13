@@ -30,7 +30,7 @@ class UserBusinessProfile extends Component {
     this.props.getCouponsToday(businessID);
     this.props.getPosts(businessID);
     this.props.verifyCheckin(this.props.user_id, this.props.uid);
-    this.props.verifyForPreviouslyReview(this.props.user_id, this.props.uid, this.props.businessName)
+    this.props.verifyForPreviouslyReview(this.props.user_id, this.props.uid);
   }
 /*
   componentWillUpdate(){
@@ -87,8 +87,8 @@ class UserBusinessProfile extends Component {
 
   componentWillUnmount() {
     this.props.userMainUpdate({ prop: 'cameraActive', value: true });
-    this.props.userMainUpdate({ prop: 'hasCheckedIn', value: false });
-    this.props.userMainUpdate({ prop: 'hasReviewed', value: false });
+    //this.props.userMainUpdate({ prop: 'hasCheckedIn', value: false });
+    //this.props.userMainUpdate({ prop: 'hasReviewed', value: false });
 
   }
 
@@ -178,6 +178,7 @@ class UserBusinessProfile extends Component {
       }
 
       renderReviewButton(){
+        //console.log(this.props.hasReviewed)
         if(this.props.hasCheckedIn){
           if(this.props.hasReviewed){
             return;
@@ -188,6 +189,9 @@ class UserBusinessProfile extends Component {
               <TouchableOpacity style={{ flex:1, alignSelf: 'stretch', borderWidth: 1, borderColor: 'white'}} onPress={() =>  {
                //if(this.props.hasCheckedIn){
                    this.props.postReviewChange( {prop: "businessID", value: this.props.uid});
+                   this.props.postReviewChange({ prop: 'businessName', value: this.props.user.businessName });
+                   this.props.postReviewChange({ prop: 'username', value: this.props.username });
+                   this.props.postReviewChange({ prop: 'userIcon', value: this.props.userImage });
                    Actions.PostReviewView();
               // }
                //else {
@@ -320,7 +324,7 @@ const mapStateToProps = state => {
     } = state.businessMain;
   const user_id = firebase.auth().currentUser.uid;
   const username  = state.userMain.user.name;
-  const { loading, hasCheckedIn, name, following } = state.userMain;
+  const { loading, hasCheckedIn, name, following, userImage, hasReviewed } = state.userMain;
 
   return {
     user_id,
@@ -337,7 +341,9 @@ const mapStateToProps = state => {
     isCouponClaim,
     username,
     loading,
-    hasCheckedIn
+    hasCheckedIn,
+    userImage,
+    hasReviewed
  };
 };
 
