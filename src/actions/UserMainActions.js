@@ -68,21 +68,34 @@ export const userSecondaryFilterUpdate = ({ prop, value }) => {
 };
 
 export const getCheckins = (uid) => {
-  return (dispatch) => {
-    //firebase.database().ref(`/Reviews`).orderByChild(`businessID`).equalTo(uid).on('value', snapshot => {
-    //console.log(uid);
-    firebase.database().ref(`/Checkins`).orderByChild(`uid`).equalTo(uid).on('value', snapshot => {
-      //console.log(snapshot.val());
-      let checkinList = [];
-      let counter = 0;
-      snapshot.forEach(child_node => {
-        checkinList.splice(0,0,{ ...child_node.val(), id: counter});
-        //checkinList.push({...child_node.val(), id: counter});
-        counter++;
+    return (dispatch) => {
+      firebase.database().ref(`/Checkins/`).orderByChild('uid').equalTo(uid).on('value', snapshot => {
+        let checkinList = [];
+        let counter = 0;
+        snapshot.forEach(child_node => {
+          var child_key = child_node.key;
+          checkinList.splice(0,0,{...child_node.val(), id: counter });
+          counter++;
+        });
+        dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'totalCheckins', value: Object.keys(checkinList).length}});
+        //var shortList = checkinList.slice(0,3);
+        //console.log(shortList)
+        checkinList.forEach( checkin => {
+          const businessID = checkin.businessID;
+          var image = '';
+          firebase.database().ref(`/users/${businessID}`).once('value', snapshot =>{
+            if(snapshot.val().image){
+              image = snapshot.val().image;
+            }
+            checkin['image'] = image;
+          });
+        });
+        console.log(checkinList)
+        //dispatch({ type: USER_CHECKINS_UPDATE, payload: checkinList});
+        //var shortList = checkinList.slice(0,3);
+        dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'checkins', value: checkinList}});
       });
-      dispatch({ type: USER_CHECKINS_UPDATE, payload: checkinList});
-    });
-  };
+    };
 };
 
 export const getMyReviews = (uid) => {
@@ -120,6 +133,8 @@ export const userSetExpired = (pid) => {
 //---------------------------------------------------------------//
 export const userGetPromos = (uid, pf, sf, fol) => {
   return (dispatch) => {
+    console.log('pf ' + pf)
+    console.log('sf ' + sf)
     //FILTERING BY PROMOTIONS
     if (pf == 'Promos') {
       //NO FILTER
@@ -142,6 +157,8 @@ export const userGetPromos = (uid, pf, sf, fol) => {
             let promoList = [];
             let counter = 0;
             snapshot.forEach(child_node => {
+              //console.log(child_node.val().businessID)
+              if(fol){
               var child_key = child_node.key;
               //console.log('Looking at filtering by favorites...-----------');
               //console.log(fol);
@@ -150,7 +167,7 @@ export const userGetPromos = (uid, pf, sf, fol) => {
                 promoList.splice(0,0,{ ...child_node.val(), id: counter, pid: child_key});
                 counter++;
               }
-            });
+            }});
             //console.log(promoList)
             //console.log("Dispatching Promos...");
             dispatch({ type: USER_PROMOS_UPDATE, payload: promoList});
@@ -201,6 +218,7 @@ export const userGetPromos = (uid, pf, sf, fol) => {
             let promoList = [];
             let counter = 0;
             snapshot.forEach(child_node => {
+              if(fol){
               var child_key = child_node.key;
               //console.log('Looking at filtering by favorites...-----------');
               //console.log(fol);
@@ -209,7 +227,7 @@ export const userGetPromos = (uid, pf, sf, fol) => {
                 promoList.splice(0,0,{ ...child_node.val(), id: counter, isCoupon: true, pid: child_key});
                 counter++;
               }
-            });
+            }});
             //console.log(promoList)
             //console.log("Dispatching Promos...");
             dispatch({ type: USER_PROMOS_UPDATE, payload: promoList});
@@ -217,7 +235,7 @@ export const userGetPromos = (uid, pf, sf, fol) => {
         }
         //FILTERING BY LOCATION
         else if (sf == 'Location') {
-          //console.log('Filtering by location...');
+          console.log('Filtering Coupons by location...');
           return dispatch(userGetCouponsByLocation(uid, pf, sf, fol));
         }
         //
@@ -350,16 +368,16 @@ export const userGetCouponsByLocation = (uid, pf, sf, fol) => {
           //console.log(child_node2.val().businessID)
           //console.log(obj.pid)
           if ( child_node2.val().businessID === obj.pid) {
-            couponList.splice(0,0,{ ...child_node2.val(), id: counter2, dfu: obj.disFromUser})
+            couponList.splice(0,0,{ ...child_node2.val(), id: counter2, dfu: obj.disFromUser, isCoupon: true})
           }
         }
       })
       //console.log('list before sorting by distance from usr: ');
       //console.log(promoList)
-      promoList = sortObj(couponList, 'dfu');
+      couponList = sortObj(couponList, 'dfu');
       //console.log('list after sorting by distance from usr ');
-      //console.log(promoList)
-      //  console.log('Dispatching')
+      console.log(couponList)
+      console.log('Dispatching')
       dispatch({ type: USER_PROMOS_UPDATE, payload: couponList });
     });
     });
@@ -455,7 +473,7 @@ export const shareItemUser = (uid, pid, isCoupon, image, text, businessID, busin
   const today = new Date().toISOString();
   const age = (moment(new Date(today)).diff(moment(new Date(birthdate)), 'minutes')/525600).toFixed(0);
   var new_event = { businessName: businessName, date: new Date().toISOString() ,
-    eventType: '', username: username, city: city, age: age };
+    eventType: '', username: username, city: city, age: age, businessID: businessID };
   const share_obj = {[uid]: 1};
   return (dispatch) => {
   if (isCoupon){
@@ -595,14 +613,18 @@ export const getSocialPosts = () => {
 export const getLeaderboard = (uid) => {
   return (dispatch) => {
     let leaderList = [];
-    firebase.database().ref(`/users`).orderByChild(`points`).on('value', snapshot => {
+    firebase.database().ref(`/userRewards`).orderByChild(`points`).on('value', snapshot => {
       let counter = 0;
       snapshot.forEach(child_node => {
-        var child_key = child_node.key;
-        if (child_node.val().type == 'user') {
+          var child_key = child_node.key;
+          var current_level = 0;
+          var points = child_node.val().points;
           counter++;
-          leaderList.splice(0,0,{...child_node.val(), key: child_key});
-        }
+          for(var i=0; i<levels.length; i++){
+            if(points>=levels[i] && points<levels[i+1]){
+              current_level = i+1;}
+            }
+          leaderList.splice(0,0,{...child_node.val(), key: child_key, level: current_level});
       });
       leaderList = sortObj(leaderList, 'points');
       leaderList.reverse();
@@ -638,16 +660,29 @@ export const userFollowBusiness = (uid, bid, bname, bicon) => {
   if (!bicon) {
     imgToUse = '';
   }
-  const like_obj = {[bid]: {['name']: bname, ['icon']: imgToUse}};
+  const user_follow_obj = {[bid]: {['name']: bname, ['icon']: imgToUse}};
+  const business_follow_obj = {[uid]: {['name']: bname, ['icon']: imgToUse}};
   //console.log('The like object: ' + like_obj);
+
+
+  firebase.database().ref(`/users/${bid}`).child('followers').update(business_follow_obj).catch((error) => {
+    Alert.alert('Could not process follow at this time', 'Sorry', {text: 'OK'});
+  });
+
+
   return (dispatch) => {
-    firebase.database().ref(`/users/${uid}`).child('following').update(like_obj).catch((error) => {
+    firebase.database().ref(`/users/${uid}`).child('following').update(user_follow_obj).catch((error) => {
       Alert.alert('Could not process follow at this time', 'Sorry', {text: 'OK'});
     });
   };
 };
 
 export const userUnfollowBusiness = (uid, bid) => {
+
+  firebase.database().ref(`/users/${bid}`).child('following').child(uid).remove().catch((error) => {
+    Alert.alert('Could not process unfollow at this time', 'Sorry', {text: 'OK'});
+  });
+
   return (dispatch) => {
     firebase.database().ref(`/users/${uid}`).child('following').child(bid).remove().catch((error) => {
       Alert.alert('Could not process unfollow at this time', 'Sorry', {text: 'OK'});
@@ -672,6 +707,7 @@ export const switchAccountUser = (email, password) => {
               { type: SET_PROFILE_UPDATE, payload: { prop: 'uid', value: user.uid } }
             );
             dispatch({ type: USER_MAIN_UPDATE, payload: {prop: 'switchLoading', value: false}});
+            dispatch({ type: USER_MAIN_UPDATE, payload: {prop: 'switchPassword', value: ''}});
             Actions.settingProfile({type: 'reset'});
             //dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'userType', value: ''}});
             //dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'uid', value: ''}});
@@ -750,9 +786,9 @@ export const getMyCheckins = (uid) => {
             checkin['image'] = image;
           });
         });
+        //dispatch({ type: USER_CHECKINS_UPDATE, payload: checkinList});
         var shortList = checkinList.slice(0,3);
         dispatch({type: USER_MAIN_UPDATE, payload: {prop: 'lastCheckins', value: shortList}});
-        dispatch({ type: USER_CHECKINS_UPDATE, payload: checkinList});
       });
     };
 };
@@ -828,6 +864,7 @@ export const updateUserProfilePic = (image_path, uid) =>{
         dispatch({type: USER_MAIN_UPDATE, payload:{prop: 'uploadError', value: 'Could not upload image.'}});
       });
 
+      firebase.database().ref(`/userRewards/${uid}`).update({icon: response});
   }).catch((error)=>{
     dispatch({type: USER_MAIN_UPDATE, payload:{prop: 'uploadLoading', value: false}});
     dispatch({type: USER_MAIN_UPDATE, payload:{prop: 'uploadError', value: 'Could not upload image.'}});

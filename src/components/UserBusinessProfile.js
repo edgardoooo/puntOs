@@ -187,19 +187,11 @@ class UserBusinessProfile extends Component {
             return (
               <View style={{ flexDirection: 'row', height: 50, backgroundColor: '#0084b4'}}>
               <TouchableOpacity style={{ flex:1, alignSelf: 'stretch', borderWidth: 1, borderColor: 'white'}} onPress={() =>  {
-               //if(this.props.hasCheckedIn){
                    this.props.postReviewChange( {prop: "businessID", value: this.props.uid});
                    this.props.postReviewChange({ prop: 'businessName', value: this.props.user.businessName });
                    this.props.postReviewChange({ prop: 'username', value: this.props.username });
                    this.props.postReviewChange({ prop: 'userIcon', value: this.props.userImage });
                    Actions.PostReviewView();
-              // }
-               //else {
-                // Alert.alert('Notification:','Must Check-in to Business',
-                // [{text: 'OK', onPress: () => {
-
-                // }}]);
-               //}
              }}>
              <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center', alignItems: 'center' }}>
              <Icon name='ios-create' size= {20} color='white' style={{ alignSelf: 'center', marginRight: 5 }} />

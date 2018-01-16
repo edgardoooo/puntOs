@@ -24,6 +24,28 @@ class SwitchAccountUser extends Component {
     }
   }
 
+  renderIcon(image) {
+            if (image) {
+                return (
+                  <TouchableWithoutFeedback onPress={() => {this.openModalMain()}} >
+                  <Image
+                  style={styles.thumbnailStyle}
+                  source={{uri: image }}
+                  />
+                  </TouchableWithoutFeedback>
+                );
+            }
+            else {
+              return(
+              <TouchableWithoutFeedback onPress={() => {this.openModalMain()}} >
+              <Image
+              style={styles.thumbnailStyle}
+              source={require('../assets/no-user-image.gif')}
+              />
+              </TouchableWithoutFeedback>);
+            }
+        }
+
   render() {
     const { user } = this.props;
     return (
@@ -37,11 +59,7 @@ class SwitchAccountUser extends Component {
       <View style={styles.backgroundStyle}>
         <View style={{ flex: 5, justifyContent: 'center'}}>
               <View style={{ flex: 8, justifyContent: 'center'}}>
-              <Image
-              style={styles.thumbnailStyle}
-              source={{uri: user.image }}
-              defaultSource={require('../assets/no-user-image.gif')}
-              />
+              {this.renderIcon(user.image)}
               </View>
               <View style={{ flex: 2 , flexDirection: 'column', justifyContent: 'center', marginTop: -30 }}>
               <Text style={{ alignSelf: 'center', fontWeight: 'bold', fontSize: 25 }}>{user.name}</Text>

@@ -16,7 +16,7 @@ const INITIAL_STATE = {
     name: '',
     email: '',
     password: '',
-    birthdate: '2017-01-01',
+    birthdate: '',
     hometown: '',
     loading: '',
     error: '',
@@ -94,11 +94,13 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, userSecondaryFilterState: new_state};
     }
     case USER_REVIEWS_UPDATE:
-      const new_reviews = { ...state.reviews, ...action.payload };
+      const new_reviews = action.payload;
       return { ...state, reviews: new_reviews };
-    case USER_CHECKINS_UPDATE:
-      const new_checkins = { ...state.checkins, ...action.payload };
+    case USER_CHECKINS_UPDATE:{
+      console.log(action.payload)
+      const new_checkins = action.payload;
       return { ...state, checkins: new_checkins };
+    }
     case USER_MAIN_SET_PROFILE:
       {const new_state = {
         ...state,

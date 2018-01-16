@@ -190,7 +190,7 @@ class PostItem extends Component {
         }
         return (
             <Icon.Button name="share" color="black" backgroundColor="white"
-            onPress={() => this.props.shareItem(uid, pid, isCoupon, this.props.item.image, this.props.item.text, this.props.item.name)}
+            onPress={() => this.props.shareItem(uid, pid, isCoupon, this.props.item.image, this.props.item.text, this.props.item.name, this.props.item.businessID)}
             >
                 <Text style={styles.postFooterButtonTextStyle}>{this.renderShares(sharedBy)}</Text>
             </Icon.Button>
@@ -247,7 +247,7 @@ class PostItem extends Component {
 
     render() {
         const {pid,icon,name,date,text,image,likedBy,isCoupon,claimedBy,sharedBy, claimLimit,expires, expired, pointsValue } = this.props.item;
-        const { uid } = this.props;
+        const uid = firebase.auth().currentUser.uid;
 
         const {authorIconStyle,authorNameStyle,postDateTextStyle,postTextStyle,postFooterStyle,overStyle,postFooterButtonTextStyle} = styles;
         return (

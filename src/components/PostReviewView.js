@@ -65,7 +65,7 @@ class PostReviewView extends Component {
       <KeyboardAwareScrollView
       style={{ backgroundColor: '#fff', flex: 1 }}
       resetScrollToCoords={{ x: 0, y: 0 }}
-      scrollEnabled={true}
+      scrollEnabled={false}
       >
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.backgroundStyle}>
@@ -94,33 +94,53 @@ class PostReviewView extends Component {
                 <Text style={textStyle}>Upload Image</Text>
             </View>
             <View style={{ flex: 3 }}>
-                <Modal
-                    isVisible={this.props.modalIsVisible}
-                >
-                    <ScrollView>
-                        <View style={modalStyle}>
-                            <View style={headerStyle}>
-                                <Text style={{fontSize: 25, color: 'white'}}>Choose Picture</Text>
-                            </View>
-                            <View style={gridStyle}>
-                                <PhotoGrid
-                                    data = { this.props.images }
-                                    itemsPerRow = { 3 }
-                                    itemMargin = { 1 }
-                                    renderItem = {this.renderItem}
-                                />
-                            </View>
-                            <View style={ {flex:3} }>
-                                <Button
-                                    overStyle={buttonOverstyle}
-                                    onPress ={this.togleModal}
-                                >
-                                    Close
-                                </Button>
-                            </View>
-                        </View>
-                    </ScrollView>
-                </Modal>
+            <Modal
+                                isVisible={this.props.modalIsVisible}
+                                onCloseRequest={() => {}}
+                                style={{ flex: 1 }}
+                            >
+                                <ScrollView>
+                                    <View style={modalStyle}>
+                                        <View style={headerStyle}>
+                                            <Text style={{fontSize: 25, color: 'white'}}>Choose Picture</Text>
+                                        </View>
+                                        <View style={gridStyle}>
+                                            <PhotoGrid
+                                                data = { this.props.images }
+                                                itemsPerRow = { 3 }
+                                                itemMargin = { 1 }
+                                                renderItem = {this.renderItem}
+                                            />
+                                        </View>
+                                        <View style={ {flex:3, flexDirection: 'row', alignItems: 'center', paddingLeft: 17 } }>
+                                            <Button
+                                                overStyle={buttonOverstyle}
+                                                onPress ={() => {
+                                                    this.togleModal();
+                                                    if(!this.props.attached){
+                                                        this.props.postReviewChange({ prop: 'selectedImage', value: null });
+                                                    }
+                                                }}
+                                            >
+                                                Close
+                                            </Button>
+                                            <Button
+                                                overStyle={buttonOverstyle}
+                                                onPress ={() => {
+                                                    this.togleModal();
+                                                    this.props.postReviewChange({prop: 'attached', value: true});
+                                                    Alert.alert('Notification:','Image Attached!',
+                                                    [{text: 'OK', onPress: () => {
+
+                                                    }}]);
+                                                }}
+                                            >
+                                                Continue
+                                            </Button>
+                                        </View>
+                                    </View>
+                                </ScrollView>
+                            </Modal>
             </View>
             <View style={{ flex: 4, flexDirection: 'row', marginTop: 10}}>
                 <StarRating
@@ -242,8 +262,8 @@ togleModal = () => {
 
 setSelected = (selectedImage) => {
   this.props.postReviewChange({ prop: 'selectedImage', value: selectedImage });
-  this.togleModal();
-  this.props.postReviewChange({ prop: 'message', value: 'Photo Selected!'});
+  //this.togleModal();
+  //this.props.postReviewChange({ prop: 'message', value: 'Photo Selected!'});
 }
 
 
@@ -273,7 +293,7 @@ onReviewSubmission () {
                    text: this.props.text,
                    tallied: this.props.tallied,
                    userIcon: this.props.userIcon,
-                   businessName: this.props.businessName,
+                   businessName: this.props.businessName
                });
                this.props.givePointsForReview(this.props.uid, this.props.user);
                Alert.alert('Posted!','Your review to' + this.props.businessName + ' was posted!',
@@ -443,7 +463,8 @@ const mapStateToProps = state => {
     tallied,
     message,
     userIcon,
-    businessName
+    businessName,
+    attached
  } = state.postReview;
 
   var { user, hasReviewed } = state.userMain;
@@ -465,7 +486,8 @@ const mapStateToProps = state => {
     businessName,
     userIcon,
     user,
-    hasReviewed
+    hasReviewed,
+    attached
  }
 
 }

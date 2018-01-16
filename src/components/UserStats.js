@@ -53,7 +53,7 @@ renderLevelProgress(overallPoints){
 
 renderLatestCheckins(lastCheckins){
   if(lastCheckins){
-    console.log(checkinItems)
+    //console.log(checkinItems)
     var checkinItems = _.map(lastCheckins, (val,key) => {
     //console.log(val)
     return  (
@@ -67,7 +67,7 @@ renderLatestCheckins(lastCheckins){
                   {val.businessName}
                   </Text>
                   <Text style={styles.postDateTextStyle}>
-                    {val.date}
+                    {this.renderDate(val.date)}
                   </Text>
                 </View>
               </View>

@@ -4,6 +4,7 @@ import { InputLine, Button, Spinner } from './common';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { linkAccount, businessMainUpdate } from '../actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Actions } from 'react-native-router-flux';
 
 class LinkAccount extends Component {
@@ -26,6 +27,12 @@ class LinkAccount extends Component {
   render() {
     const { user } = this.props;
     return (
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#ecedee', flex: 1 }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.backgroundStyle}
+      scrollEnabled={true}
+      >
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.backgroundStyle}>
         <View style={{ flex: 5, justifyContent: 'center'}}>
@@ -68,6 +75,7 @@ class LinkAccount extends Component {
         </View>
       </View>
       </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     );
   }
 }
