@@ -4,9 +4,9 @@ import { Card, CardSection } from './common';
 
 class LeaderboardItem extends Component {
   renderIcon(){
-          if (this.props.lbentries.image) {
+          if (this.props.lbentries.icon) {
               return (
-                <Image style={styles.authorIconStyle} source={{uri: this.props.lbentries.image }} />
+                <Image style={styles.authorIconStyle} source={{uri: this.props.lbentries.icon }} />
               );
           }
           else {
@@ -33,7 +33,7 @@ class LeaderboardItem extends Component {
                             <Text style={{
                               fontSize: 18,
                               flexWrap: 'wrap',
-                              flex: 1 }}>{this.props.lbentries.name}</Text>
+                              flex: 1 }}>{this.props.lbentries.username}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingLeft: 5, flex: 2 }}>

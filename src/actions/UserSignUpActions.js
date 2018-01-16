@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import axios from 'axios';
+import { Alert } from 'react-native';
 import {
     USER_SIGNUP_RESET,
     USER_SIGNUP_UPDATE,
@@ -53,6 +54,10 @@ export const signUpUser = (props) => {
                                 });
                             signUpUserSuccess(dispatch, user);
                             dispatch({ type: USER_SIGNUP_RESET });
+                            Alert.alert('Notification:','Sign Up Successful',
+                            [{text: 'OK', onPress: () => {
+
+                            }}]);
                             Actions.signUpSuccessUser();
                         });}).catch(() => {
                           signUpBusinessFail(dispatch, 'Could not send verification email. Try Again.');

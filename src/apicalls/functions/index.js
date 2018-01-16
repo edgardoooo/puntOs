@@ -339,105 +339,132 @@ exports.approveBusinessAccount = functions.https.onRequest((req, res) => {
     const user_id = req.query.uid;
     const latitude = req.query.latitude;
     const longitude = req.query.longitude;
-    var new_event = { businessName: '', date: new Date().toISOString() , eventType: 'checkIn', username: '', age: 0, city: '' };
+    var new_event = { businessName: '', date: new Date().toISOString() , eventType: 'checkIn', username: '', age: 0, city: '', businessID: businessID };
     new_event.username = req.query.username;
+    const _today = new Date().toISOString().substring(0,10);
+    const queryparam = businessID+_today;
     var checkinFailed = false;
     var check_ins_today = 0;
-    const _today = new Date().toISOString().substring(0,10);
-    admin.database().ref(`/Checkins`).orderByChild(`queryparam`).equalTo(businessID+_today).once('value', snapshot => {
+    admin.database().ref(`/Checkins`).orderByChild(`uid`).equalTo(user_id).once('value', snapshot => {
       if(snapshot.val()){
-      check_ins_today = Object.keys(snapshot.val()).length;
+      //check_ins_today = Object.keys(snapshot.val()).length;
+      //console.log(check_ins_today)
+      //console.log(snapshot.val())
       snapshot.forEach(checkin => {
         checkinObj = checkin.val();
-        if(checkinObj.uid === user_id){
+        if(checkinObj.queryparam === queryparam){
           checkin_response.message = 'Unable to checkin, cannot checkin on the same business twice in a day.';
           checkinFailed = true;
           return res.status(200).send(checkin_response);
         }
-      });}}).then(()=>{
-        if(!checkinFailed){
-          if(check_ins_today < 10){
-              admin.database().ref(`users/${businessID}`).once('value', business => {
-                if(!business){
-                    checkin_response.message = 'Could not find business.';
-                    checkin_response.checkedIn = false;
-                    return res.status(200).send(checkin_response);
-                }
-                const businessObj = business.val();
-                const businessLat = businessObj.latitude;
-                const businessLong = businessObj.longitude;
-                const businessRad = businessObj.radius;
-                const distance_feet = haversine({latitude: businessLat, longitude: businessLong}, {latitude: latitude, longitude: longitude}, {unit: 'meter'})*3.28084;
-                new_event.businessName = businessObj.businessName;
-                checkin_response.distance = distance_feet;
-                //return res.status(200).send(checkin_response);
-                if(distance_feet <= businessRad){
-                  checkin_response.checkedIn = true;
-                  checkin_response.message = 'Successfully checked in.';
-                  checkin_response.businessName = businessObj.businessName;
-                  checkin_response.pointsEarned = 50;
-                  admin.database().ref(`users/${user_id}`).once('value', user => {
-                    const today = new Date().toISOString();
-                    const userObj = user.val();
-                    const age = (moment(new Date(today)).diff(moment(new Date(userObj.birthdate)), 'minutes')/525600).toFixed(0);
-                    const checkin_in = {age: age, businessID: businessID, businessName: businessObj.businessName, city: userObj.hometown,
-                    date: today, name: userObj.name, uid: user_id, queryparam: businessID+today};
-                    new_event.age = age;
-                    new_event.city = userObj.hometown;
-                    //new_event = {...new_event, age: age, city: userObj.hometown}
-                    admin.database().ref(`/Checkins`).once('value', checkins => {
-                      checkins.ref.push(checkin_in).catch(() => {
-                        checkin_response.message = 'Unable to checkin at this time.';
-                        checkin_response.checkedIn = false;
-                        return res.status(200).send(checkin_response);
-                      });
-                      var current_points = userObj.points;
-                      const new_points = current_points+50;
-                      user.ref.update({points: new_points}).then(()=>{
-                        admin.database().ref(`/userRewards/${user_id}`).once('value', accumulated =>{
-                          var current_points = accumulated.val().points;
-                          const new_points = current_points + 50;
-                          accumulated.ref.update({points: new_points}).then(()=>{
-                            admin.database().ref('/Events/').push(new_event);
-                            return res.status(200).send(checkin_response);
-                          });
-                        });
-                      }).catch(()=>{
-                        checkin_response.message = 'Could not add points.';
-                        return res.status(200).send(checkin_response);
-                      });
-                    }).catch(()=>{
+        if(checkinObj.date.substring(0,10) === _today){
+          check_ins_today++;
+        }
+      });}
+      //console.log(response)
+      if(!checkinFailed){
+        //console.log(check_ins_today)
+        if(check_ins_today < 10){
+            admin.database().ref(`users/${businessID}`).once('value', business => {
+              if(!business){
+                  checkin_response.message = 'Could not find business.';
+                  checkin_response.checkedIn = false;
+                  return res.status(200).send(checkin_response);
+              }
+              const businessObj = business.val();
+              const businessLat = businessObj.latitude;
+              const businessLong = businessObj.longitude;
+              const businessRad = businessObj.radius;
+              const distance_feet = haversine({latitude: businessLat, longitude: businessLong}, {latitude: latitude, longitude: longitude}, {unit: 'meter'})*3.28084;
+              new_event.businessName = businessObj.businessName;
+              checkin_response.distance = distance_feet;
+              //return res.status(200).send(checkin_response);
+              if(distance_feet <= businessRad){
+                checkin_response.checkedIn = true;
+                checkin_response.message = 'Successfully checked in.';
+                checkin_response.businessName = businessObj.businessName;
+                checkin_response.pointsEarned = 50;
+                admin.database().ref(`users/${user_id}`).once('value', user => {
+                  const today = new Date().toISOString();
+                  const userObj = user.val();
+                  const age = (moment(new Date(today)).diff(moment(new Date(userObj.birthdate)), 'minutes')/525600).toFixed(0);
+                  const checkin_in = {age: age, businessID: businessID, businessName: businessObj.businessName, city: userObj.hometown,
+                  date: today, name: userObj.name, uid: user_id, queryparam: businessID+today.substring(0,10)};
+                  new_event.age = age;
+                  new_event.city = userObj.hometown;
+                  //new_event = {...new_event, age: age, city: userObj.hometown}
+                  admin.database().ref(`/Checkins`).once('value', checkins => {
+                    checkins.ref.push(checkin_in).catch(() => {
                       checkin_response.message = 'Unable to checkin at this time.';
                       checkin_response.checkedIn = false;
                       return res.status(200).send(checkin_response);
                     });
+                    var current_points = userObj.points;
+                    const new_points = current_points+50;
+                    user.ref.update({points: new_points}).then(()=>{
+                      admin.database().ref(`/userRewards/${user_id}`).once('value', accumulated =>{
+                        var current_points = accumulated.val().points;
+                        const new_points = current_points + 50;
+                        accumulated.ref.update({points: new_points}).then(()=>{
+                          admin.database().ref('/Events/').push(new_event);
+                          return res.status(200).send(checkin_response);
+                        });
+                      });
+                    }).catch(()=>{
+                      checkin_response.message = 'Could not add points.';
+                      return res.status(200).send(checkin_response);
+                    });
                   }).catch(()=>{
-                    checkin_response.message = 'Unable to access user data.';
+                    checkin_response.message = 'Unable to checkin at this time.';
                     checkin_response.checkedIn = false;
                     return res.status(200).send(checkin_response);
                   });
-                } else{
+                }).catch(()=>{
+                  checkin_response.message = 'Unable to access user data.';
                   checkin_response.checkedIn = false;
-                  checkin_response.message = 'Out of range';
-                  checkin_response.businessName = businessObj.businessName;
                   return res.status(200).send(checkin_response);
-                }
-              }).catch(()=>{
+                });
+              } else{
                 checkin_response.checkedIn = false;
-                checkin_response.message = 'Unable to access business data.';
+                checkin_response.message = 'Out of range';
+                checkin_response.businessName = businessObj.businessName;
                 return res.status(200).send(checkin_response);
-              });
-          }
-          else {
+              }
+            }).catch(()=>{
+              checkin_response.checkedIn = false;
+              checkin_response.message = 'Unable to access business data.';
+              return res.status(200).send(checkin_response);
+            });
+        }
+        else {
+            admin.database().ref(`anomalies/${user_id}`).once('value', user => {
+              if(user.val()){
+                if(user.val().limitReached >= 2){
+                  console.log('Send email')
+                  //Send Email Common Annomaly
+                } else {
+                  const new_limit = user.val().limitReached + 1;
+                  user.ref.update({limitReached: new_limit});
+                }
+              } else {
+                user.ref.set({limitReached: 1});
+              }
+            }).then(()=>{
               checkin_response.message = 'Unable to checkin, cannot checkin more than 10 times a day.';
               return res.status(200).send(checkin_response);
-          }
+            }).catch((error) => {
+              checkin_response.message = 'An error occurred while trying to check in.';
+              return res.status(200).send(checkin_response);
+            });
         }
-      }).catch(() => {
+      }
+      //return {check_ins_today: check_ins_today, checkinFailed: checkinFailed};
+    }).catch((error) => {
+        console.log(error)
         checkin_response.checkedIn = false;
         checkin_response.message = 'Unable to access checkin data.';
         return res.status(200).send(checkin_response);
-      })
+      });
   });
 
   exports.aggregateReviews = functions.https.onRequest((req, res) => {

@@ -107,7 +107,7 @@ renderInfo(){
       <TouchableWithoutFeedback onPress={() => {this.toggleInfo()}}>
         <View style={{flex:2}}></View>
       </TouchableWithoutFeedback>
-        <View style={{ flex: 4, justifyContent: 'center' , backgroundColor: '#fff', shadowColor: '#000',
+        <View style={{ flex: 5, justifyContent: 'center' , backgroundColor: '#fff', shadowColor: '#000',
         shadowOffset: { width: 0, height: -2 },shadowOpacity: 0.1,shadowRadius: 2,elevation: 1, paddingTop: -10, paddingBottom: 10 }}>
         <TouchableWithoutFeedback onPress={() => {this.toggleInfo()}}>
         <Icon name='ios-arrow-down' size= {30} color='grey' style={{ alignSelf: 'center' }} />

@@ -298,6 +298,7 @@ export const createCoupon = (coupon_state, business_name, uid, category, user_im
 
 export const likeItem = (uid, pid, isCoupon) => {
   const like_obj = {[uid]: 1};
+  console.log(uid)
   if (isCoupon){
     return (dispatch) => {
       firebase.database().ref(`/Coupons/${pid}`).child('likedBy').update(like_obj).catch((error) => {
@@ -311,7 +312,7 @@ export const likeItem = (uid, pid, isCoupon) => {
 
 };
 
-export const shareItem = (uid, pid, isCoupon, image, text, businessName) => {
+export const shareItem = (uid, pid, isCoupon, image, text, businessName, businessID) => {
   const like_obj = {[uid]: 1};
   var shareContent = {
     contentType: 'link',
@@ -319,6 +320,10 @@ export const shareItem = (uid, pid, isCoupon, image, text, businessName) => {
     quote: '',
     title: ''
   };
+  const today = new Date().toISOString();
+  const age = (moment(new Date(today)).diff(moment(new Date(birthdate)), 'minutes')/525600).toFixed(0);
+  var new_event = { businessName: businessName, date: new Date().toISOString() ,
+    eventType: '', username: username, city: city, age: age, businessID: businessID };
   const share_obj = {[uid]: 1};
   return (dispatch) => {
   if (isCoupon){
@@ -335,6 +340,7 @@ export const shareItem = (uid, pid, isCoupon, image, text, businessName) => {
           }
           else {
             firebase.database().ref(`/Coupons/${pid}`).child('sharedBy').update(share_obj).then(()=>{
+              firebase.database().ref('/Events/').push(new_event);
               Alert.alert('Coupon Shared!', 'You can review the post in your facebook app.', {text: 'OK'});
             }).catch((error) => {
               Alert.alert('Error!', 'Could not share coupon.', {text: 'OK'});
@@ -358,6 +364,7 @@ export const shareItem = (uid, pid, isCoupon, image, text, businessName) => {
           }
           else {
             firebase.database().ref(`/posts/${pid}`).child('sharedBy').update(share_obj).then(()=>{
+              firebase.database().ref('/Events/').push(new_event);
               Alert.alert('Promo Shared!', 'You can review the post in your facebook app.', {text: 'OK'});
             }).catch((error) => {
               Alert.alert('Error!', 'Could not share coupon.', {text: 'OK'});
@@ -560,6 +567,7 @@ export const switchAccount = (email, password) => {
               { type: SET_PROFILE_UPDATE, payload: { prop: 'uid', value: user.uid } }
             );
             dispatch({ type: BUSINESS_MAIN_UPDATE, payload: {prop: 'switchLoading', value: false}});
+            dispatch({ type: BUSINESS_MAIN_UPDATE, payload: {prop: 'switchPassword', value: ''}});
             Actions.settingProfile({type: 'reset'});
           }).catch((error) => {
             console.log(error)

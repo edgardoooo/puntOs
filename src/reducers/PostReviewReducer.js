@@ -21,7 +21,8 @@ const INITIAL_STATE = {
     selectedImage: {},
     tallied: false,
     businessName: '',
-    userIcon: ''
+    userIcon: '',
+    attached: false
 };
 
 export default ( state=INITIAL_STATE, action ) => {

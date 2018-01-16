@@ -198,7 +198,7 @@ class UserPromoList extends Component {
                 <View style={this.renderSecondarySelectedStyle('Entertainment')}>
                   <TouchableOpacity onPress={() => {
                     sec_filter = 'Entertainment';
-                    //this.filter(pri_filter, sec_filter);
+                    this.filter(pri_filter, sec_filter);
                    }}>
                     <Icon name='md-desktop' size= {25} color={sec_filter === 'Entertainment' ? 'white' : '#0084b4'} style={{ alignSelf: 'center' }} />
                   </TouchableOpacity>

@@ -24,10 +24,14 @@ class CheckinList extends Component {
 }
 const mapStateToProps = state => {
   var { user } = state.userMain;
-
+  //console.log(state.userMain.checkins)
+  //const { checkins } = state.userMain;
+  console.log(state.userMain.checkins)
   const checkins = _.map(state.userMain.checkins, (val, key) => {
+    //console.log()
     return {...val, key};
   });
+  console.log(checkins)
   return { user, checkins };
 }
 

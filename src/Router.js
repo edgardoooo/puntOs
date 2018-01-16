@@ -312,7 +312,7 @@ const RouterComponent = () => {
           navBarButtonColor='white'
           onBack={() => Actions.pop()}
           component={RedeemCouponView}
-          title="RedeemCouponView"
+          title="Claim Coupon"
         />
         <Scene
           key='switchAccountUser'

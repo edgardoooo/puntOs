@@ -33,9 +33,10 @@ class CheckinItem extends Component {
 
 
     renderIcon(image) {
-          if (image) {
+      console.log(this.props.checkin.image)
+          if (this.props.checkin.image) {
               return (
-                <Image style={styles.authorIconStyle} source={{uri: image }} />
+                <Image style={styles.authorIconStyle} source={{uri: this.props.checkin.image }} />
               );
           }
           else {
@@ -46,6 +47,7 @@ class CheckinItem extends Component {
 
     render() {
         const { name, businessName, date, businessID, image } = this.props.checkin;
+        console.log(this.props.checkin)
         return (
           <View>
               <Card>
@@ -58,7 +60,7 @@ class CheckinItem extends Component {
                         {/*
                         <Icon name='md-home' size= {40} color='#0084b4' style={{ alignSelf: 'center' }} />
                         */}
-                        {this.renderIcon(image)}
+                        {this.renderIcon(this.props.checkin.image)}
                         </View>
                         <View style={{ flexDirection: 'column' ,justifyContent: 'center', alignItems: 'center', paddingLeft: 5, flex: 6 }}>
                             <Text style={{

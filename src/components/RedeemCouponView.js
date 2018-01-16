@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Image, TouchableHighlight, LayoutAnimation } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableHighlight, LayoutAnimation, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, Spinner } from './common';
 import { connect } from 'react-redux';
@@ -94,7 +94,7 @@ class RedeemCouponView extends Component {
                     if(user.points){
                       user_points = user.points;
                     }
-                    if (user_points > pointsValue){
+                    if (user_points >= pointsValue){
                         this.props.claimCoupon({ uid, coupon, user, name });
                         this.props.updateClaimBy(uid, coupon.pid);
                         if(coupon.claimedBy.length == coupon.claimLimit){
@@ -102,7 +102,9 @@ class RedeemCouponView extends Component {
                         }
                     }
                     else {
-                        this.props.updateCouponProfile({ prop: 'message', value:'Not sufficient funds!' });
+                        //this.props.updateCouponProfile({ prop: 'message', value:'Not sufficient funds!' });
+                        Alert.alert('Notification:','Not sufficient funds!',
+                        {text: 'OK'});
                     }
                 }} >
                     <Text style={buttonStyle}>Redeem Now!</Text>
@@ -119,7 +121,7 @@ const  calculatePointsAfterClaim =(user, pointsValue) => {
         user_points = user.points;
       }
       var result = user_points - pointsValue;
-        if(result > 0){
+        if(result >= 0){
             return "After:    "+result;
         }
         else {

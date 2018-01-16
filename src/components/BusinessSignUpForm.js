@@ -7,6 +7,7 @@ import { businessFormUpdate, businessSignUp, getLocation } from '../actions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import TextInputMask from 'react-native-text-input-mask';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { BUSINESS_NAME_REGEX, EMAIL_REGEX,
   USERNAME_REGEX, PASSWORD_REGEX, ZIP_REGEX, CITY_LIST, PHONE_REGEX } from './../constants';
@@ -87,10 +88,10 @@ class BusinessSignUpForm extends Component {
       case 'phone': {
         if(value.match(PHONE_REGEX)){
           this.setState({phoneBorder: '#0084b4'});
-          if(value.indexOf('.') === -1 && value.indexOf('-') === -1){
-            const new_phone = value.slice(0,3) + '-' + value.slice(3,6) + '-' + value.slice(6);
-            this.props.businessFormUpdate({ prop: 'phoneNumber', value: new_phone })
-          }
+          //if(value.indexOf('.') === -1 && value.indexOf('-') === -1){
+            //const new_phone = value.slice(0,3) + '-' + value.slice(3,6) + '-' + value.slice(6);
+            //this.props.businessFormUpdate({ prop: 'phoneNumber', value: new_phone })
+          //}
           return;
         } else {
           this.setState({phoneBorder: '#f97171'});
@@ -269,6 +270,17 @@ class BusinessSignUpForm extends Component {
         overStyle={{ borderBottomColor: '#0084b4', color: '#0084b4' }}
         value={country}
       />
+      <TextInputMask
+        onChangeText={value => {
+                businessFormUpdate({ prop: 'phoneNumber', value });
+                this.validateInput('phone', value);}}
+        placeholder='Phone Number'
+        placeholderTextColor='gray'
+        style={[styles.celphoneTextStyle, {borderBottomColor: this.state.phoneBorder}]}
+        value={phoneNumber}
+        mask={"[000]-[000]-[0000]"}
+      />
+      {/*
       <InputLine
         onChangeText={value => {
         businessFormUpdate({ prop: 'phoneNumber', value });
@@ -280,6 +292,7 @@ class BusinessSignUpForm extends Component {
         overStyle={{ borderBottomColor: this.state.phoneBorder, color: '#0084b4' }}
         value={phoneNumber}
       />
+      */}
       </View>
     );
     } else if (step === 3) {
@@ -622,6 +635,14 @@ width: 110,
 flex:1,
 alignSelf: 'center',
 resizeMode: 'contain'
+},
+celphoneTextStyle: {
+  borderBottomColor: '#0084b4',
+  color: '#0084b4',
+  fontSize: 18,
+  borderBottomWidth: 1.5,
+  width: 290,
+  marginBottom: 10
 }
 }
 

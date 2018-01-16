@@ -11,7 +11,7 @@ const INITIAL_STATE = {
     email: '',
     password: '',
     birthdate: '2000-01-01',
-    hometown: '',
+    hometown: 'Aguada',
     loading: '',
     error: '',
     telephone: '',
@@ -25,7 +25,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case USER_SIGNUP_RESET: 
+        case USER_SIGNUP_RESET:
             return INITIAL_STATE;
         case USER_SIGNUP_UPDATE:
             return { ...state, [action.payload.prop]: action.payload.value };
